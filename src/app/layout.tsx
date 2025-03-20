@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/shared/Navbar";
-// import localLogo from "next/font/local"
-
-// const fontLogo = localLogo({
-//   src:"../assets/fonts/logo.ttf"
-// })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,10 +14,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={``}
-        cz-shortcut-listen="true"
+      cz-shortcut-listen="true"
       >
-        <Navbar/>
         {children}
       </body>
     </html>
