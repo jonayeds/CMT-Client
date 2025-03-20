@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
+.logo{
+    font-family: "Dancing Script";
+    color: #4EAB60;
+}
