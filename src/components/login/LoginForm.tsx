@@ -11,9 +11,11 @@ import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter()
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         console.log(data)
       setLoading(true);
@@ -22,8 +24,9 @@ const LoginForm = () => {
       console.log(result)
           if(result?.success){
             toast.success(result?.message)
+            router.push("/dashboard")
           }else{
-            toast?.error(result?.message)
+            toast.error(result?.message)
           }
       setLoading(false);
     };
@@ -37,7 +40,7 @@ const LoginForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6 mt-6 items-center md:min-w-xs"
+            className="flex flex-col gap-6 mt-6 items-center min-w-[80vw] md:min-w-xs"
           >
             <FormField
               control={form.control}
@@ -47,7 +50,7 @@ const LoginForm = () => {
                   <FormLabel>Email or ID</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
+                      type="text"
                       placeholder="john@example.com"
                       {...field}
                       value={field.value || ""}

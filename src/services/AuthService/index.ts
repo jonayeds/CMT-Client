@@ -14,7 +14,7 @@ export const registerUser = async(data:FieldValues)=>{
         })
         const resultData = await result.json()
         if(resultData?.success){
-            (await cookies()).set("accessToken", resultData?.accessToken)
+            (await cookies()).set("accessToken", resultData?.data?.accessToken)
         }
         return resultData
     } catch (error) {
@@ -33,10 +33,25 @@ export const loginUser = async(data:FieldValues)=>{
         })
         const resultData = await result.json()
         if(resultData?.success){
-            (await cookies()).set("accessToken", resultData?.accessToken)
+            (await cookies()).set("accessToken", resultData?.data?.accessToken)
         }
         return resultData
     } catch (error) {
         console.log(error)
     }
+}
+
+export const getUser = async()=>{
+    const accessToken = (await cookies()).get("accessToken")?.value
+    if(!accessToken){
+        return null
+    }
+    const user = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/me`, {
+        headers: {
+            "Authorization": accessToken as string
+        }
+    })
+    const userData = await user.json()
+    return userData?.data
+
 }

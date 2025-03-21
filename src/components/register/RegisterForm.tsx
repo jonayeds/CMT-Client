@@ -17,10 +17,12 @@ import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/sel
 import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/router";
 
 const RegisterForm = () => {
   const [image, setImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
     if (image) {
@@ -31,6 +33,7 @@ const RegisterForm = () => {
     console.log(result)
     if(result?.success){
       toast.success(result.message)
+      router.push("/dashboard")
     }else{
       toast.error(result.message)
     }
