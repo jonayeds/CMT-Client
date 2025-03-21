@@ -6,6 +6,7 @@ import { User, X } from "lucide-react"
 const ImageInput = ({image, setImage}: {image: string, setImage: (image: string) => void}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+    console.log(file)
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
@@ -14,7 +15,7 @@ const ImageInput = ({image, setImage}: {image: string, setImage: (image: string)
       reader.readAsDataURL(file)
     }
   }
-
+console.log(image)
   const handleClearImage = ()=>{
     setImage("")
   }
