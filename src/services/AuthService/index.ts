@@ -55,3 +55,7 @@ export const getUser = async()=>{
     return userData?.data
 
 }
+
+export const logoutUser = async()=>{
+    (await cookies()).delete("accessToken")
+}

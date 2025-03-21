@@ -1,6 +1,6 @@
 import HeroSection from "@/components/home/HeroSection"
 
-const HomePage = async() => {
+const HomePage = () => {
   return (
     <div className="container mx-auto">
       <HeroSection/>
