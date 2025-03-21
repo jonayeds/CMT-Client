@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Contact, File, Home, LayoutDashboard, LogOut } from "lucide-react";
+import { Contact, File, Home, LayoutDashboard, LogOut, User2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -58,6 +58,10 @@ const Navbar = () => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="border-gray-200">
+          <DropdownMenuItem>
+            <User2/>
+            Profile
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <LayoutDashboard/>
             Dashboard
