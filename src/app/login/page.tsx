@@ -1,8 +1,8 @@
-
+import LoginForm from "@/components/login/LoginForm"
 const LoginPage = () => {
   return (
-    <div>
-        
+    <div className="flex justify-center items-center h-screen">
+        <LoginForm />
     </div>
   )
 }

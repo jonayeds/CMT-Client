@@ -14,7 +14,7 @@ import { useState } from "react";
 import { uploadImage } from "@/services/imageUploader";
 import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { registerUser } from "@/services/register";
+import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
