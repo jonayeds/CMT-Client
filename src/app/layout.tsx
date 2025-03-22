@@ -17,7 +17,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body cz-shortcut-listen="true">
-          <Toaster position="top-center" />
+          <Toaster position="top-center" duration={1000} />
           {children}
         </body>
       </html>

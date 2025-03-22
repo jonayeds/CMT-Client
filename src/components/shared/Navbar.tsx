@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import {
+  BookOpen,
   Contact,
-  File,
   Home,
+  Info,
   LayoutDashboard,
   LogOut,
   Plus,
@@ -63,7 +64,7 @@ const Navbar = () => {
             path === "/about" ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
-          <File />
+          {user ? <BookOpen /> :  <Info />}
           { user ? "My Classes" : "About"}
         </Link>
         {
