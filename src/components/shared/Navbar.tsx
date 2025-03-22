@@ -61,7 +61,7 @@ const Navbar = () => {
         <Link
           href={ user ? "/my-classes" : "/about"}
           className={`${
-            path === "/about" ? activeNav : inactiveNav
+            path === "/about" || path === "/my-classes" ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
           {user ? <BookOpen /> :  <Info />}
@@ -69,9 +69,9 @@ const Navbar = () => {
         </Link>
         {
           user ? <Link
-          href={user.role === "student" ? "/join-class" : "/create-class"}
+          href={user.role === "student" ? "/join-classroom" : "/create-classroom"}
           className={`${
-            path === "/contact" ? activeNav : inactiveNav
+             ["/contact", "/create-classroom", "/join-classroom"].includes(path) ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
           {user.role === "student" ? <Plus /> : <PlusCircle />}
