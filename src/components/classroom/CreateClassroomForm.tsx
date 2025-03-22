@@ -9,10 +9,8 @@ import { Form } from "../ui/form";
 import { Input } from "../ui/input";
 import { Loader2, PlusCircle } from "lucide-react";
 import { Button } from "../ui/button";
-import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
 import {
   Select,
   SelectContent,
@@ -22,6 +20,7 @@ import {
 } from "../ui/select";
 import { ClassHours, ClassMinutes, WeekDays } from "@/constants/classroom";
 import { ScrollArea } from "../ui/scroll-area";
+import { createClassroom } from "@/services/Classroom";
 
 const CreateClassroomForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,19 +28,23 @@ const CreateClassroomForm = () => {
     const [isAddDisabled, setIsAddDisabled] = useState<boolean>(true)
 
   const router = useRouter();
-  const { setUser } = useUser();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
-    setLoading(true);
-    const result = await loginUser(data);
+      setLoading(true);
+      data.classDays = data.classDays.map((day:{value:string}) => day.value)
+      data.classDays = data.classDays.filter((day:string) => day !== "")
+      data.startTime = data.startTime.hour + ":" + data.startTime.minute
+      data.endTime = data.endTime.hour + ":" + data.endTime.minute
+      console.log(data);
+    const result = await createClassroom(data);
+    console.log(result)
     if (result?.success) {
-      toast.success(result?.message);
-      setUser(result?.data?.data);
+      toast.success(result?.message, {duration: 3000});
       router.push("/");
+      setLoading(false);
     } else {
-      toast.error(result?.message);
+      toast.error(result?.message, {duration: 3000});
+      setLoading(false);
     }
-    setLoading(false);
   };
   const form = useForm({
     defaultValues: {
@@ -97,8 +100,6 @@ const CreateClassroomForm = () => {
   }
   useEffect(()=>{
     const days = classDays.filter(day => day.value !== "")
-      console.log(days)
-      console.log(classDaysFields.length)
     if(classDaysFields.length >= 7){
         setIsAddDisabled(true)
     }else if(classDaysFields.length > days.length ){
