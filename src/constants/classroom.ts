@@ -4,3 +4,5 @@ export const ClassMinutes: string[] = []
 for(let i = 0; i < 60; i++){
     ClassMinutes.push(i<10 ? `0${i}` : i.toString())
 }
+
+export const WeekDays: string[] = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]

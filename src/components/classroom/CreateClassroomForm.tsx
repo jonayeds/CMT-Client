@@ -2,7 +2,7 @@
 import { FormControl } from "../ui/form";
 import { useFieldArray, useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormField, FormItem, FormLabel } from "../ui/form";
 import { FieldValues } from "react-hook-form";
 import { Form } from "../ui/form";
@@ -20,11 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ClassHours, ClassMinutes } from "@/constants/classroom";
+import { ClassHours, ClassMinutes, WeekDays } from "@/constants/classroom";
 import { ScrollArea } from "../ui/scroll-area";
 
 const CreateClassroomForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [days,setDays] = useState<{value:string}[]>([])
+    const [isAddDisabled, setIsAddDisabled] = useState<boolean>(true)
 
   const router = useRouter();
   const { setUser } = useUser();
@@ -51,8 +53,8 @@ const CreateClassroomForm = () => {
     },
   });
 
-  const {startTime, endTime} = form.watch()
-  const { append: appendClassDay, fields: classDays } = useFieldArray({
+  const {startTime, endTime, classDays} = form.watch()
+  const { append: appendClassDay, fields: classDaysFields } = useFieldArray({
     control: form.control,
     name: "classDays",
   });
@@ -84,7 +86,32 @@ const CreateClassroomForm = () => {
             return false
         }
     }
+}
+  const handleClassDayDisabled = (classDay:string)=>{
+    const  isDisabled = classDays.find(day => day.value === classDay)
+    if(isDisabled){
+        return true
+    }else{
+        return false
+    }
   }
+  useEffect(()=>{
+    const days = classDays.filter(day => day.value !== "")
+      console.log(days)
+      console.log(classDaysFields.length)
+    if(classDaysFields.length >= 7){
+        setIsAddDisabled(true)
+    }else if(classDaysFields.length > days.length ){
+        setIsAddDisabled(true)
+    }else{
+        setIsAddDisabled(false)
+    }
+  },[classDaysFields.length, classDays, days])
+  const onChangeDay = ()=>{
+    const days = classDays.filter(day => day.value !== "")
+    setDays(days)
+  }
+ 
   return loading ? (
     <div className="flex justify-center items-center h-screen">
       <Loader2 className="w-10 h-10 animate-spin" />
@@ -142,6 +169,7 @@ const CreateClassroomForm = () => {
           <div className="flex items-center justify-between w-full ">
             <h1 className="text-lg font-semibold">Class Days</h1>
             <Button
+            disabled={isAddDisabled}
               variant="outline"
               type="button"
               size="icon"
@@ -150,7 +178,7 @@ const CreateClassroomForm = () => {
               <PlusCircle className="w-4 h-4" />
             </Button>
           </div>
-          {classDays.map((day, idx) => (
+          {classDaysFields.map((day, idx) => (
               <FormField
               key={idx}
               control={form.control}
@@ -163,7 +191,10 @@ const CreateClassroomForm = () => {
                     <Select
                       {...field}
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(e)=>{
+                        field.onChange(e)
+                        onChangeDay()
+                      }}
                       >
                       <FormControl>
                         <SelectTrigger className="w-full">
@@ -173,13 +204,11 @@ const CreateClassroomForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-white border border-gray-200">
-                        <SelectItem value="Monday">Monday</SelectItem>
-                        <SelectItem value="Tuesday">Tuesday</SelectItem>
-                        <SelectItem value="Wednesday">Wednesday</SelectItem>
-                        <SelectItem value="Thursday">Thursday</SelectItem>
-                        <SelectItem value="Friday">Friday</SelectItem>
-                        <SelectItem value="Saturday">Saturday</SelectItem>
-                        <SelectItem value="Sunday">Sunday</SelectItem>
+                        {
+                            WeekDays.map((day)=>(
+                                <SelectItem key={day} value={day} disabled={handleClassDayDisabled(day)}>{day}</SelectItem>
+                            ))
+                        }
                       </SelectContent>
                     </Select>
                   </FormControl>
