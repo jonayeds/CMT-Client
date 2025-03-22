@@ -37,7 +37,6 @@ const RegisterForm = () => {
     if(result?.success){
       toast.success(result.message)
       const user = await getUser()
-      console.log(user)
       setUser(user)
       setIsLoading(false)
       router.push("/")

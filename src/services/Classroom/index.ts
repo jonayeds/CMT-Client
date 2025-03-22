@@ -36,3 +36,17 @@ export const getMyClasses = async()=>{
         console.log(error)
     }
 }
+
+export const  joinClassroom = async(data:FieldValues)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/join-classroom`,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":token as string,
+        },
+        body: JSON.stringify(data)
+    })
+    const result  = await res.json()
+    return result
+}

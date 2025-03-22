@@ -12,7 +12,7 @@ import {
   PlusCircle,
   User2,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -28,17 +28,19 @@ import { IUser } from "@/types/user";
 const Navbar = () => {
   const path = usePathname();
   const { user, isLoading, setUser } = useUser();
+  const router = useRouter()
   const activeNav = "from-[#58c38c] bg-gradient-to-b  to-[#4EAB60] text-white";
   const inactiveNav = "duration-300 hover:text-[#4EAB60]";
   const handleLogout = async()=>{
     await logoutUser()
     setUser(null)
+    router.push("/")
   }
   
   return isLoading? <div className="flex   justify-between items-center px-[4vw]  py-8">
     <Skeleton className="w-[10vw] h-8  rounded-full"  />
     <Skeleton className="w-[30vw] h-8 rounded-full" />
-    <Skeleton className="w-[20vw] h-8 rounded-full" />
+    <Skeleton className="w-[5vw] h-8 rounded-full" />
   </div> : (
     <div className="flex justify-between items-center px-[4vw]  py-6">
       <div className="flex items-center gap-4">
@@ -60,7 +62,7 @@ const Navbar = () => {
         </Link>
         <Link
           href={ user ? "/my-classes" : "/about"}
-          className={`${
+          className={`${ 
             path === "/about" || path === "/my-classes" ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
