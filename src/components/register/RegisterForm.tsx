@@ -14,17 +14,20 @@ import { useState } from "react";
 import { uploadImage } from "@/services/imageUploader";
 import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { registerUser } from "@/services/AuthService";
+import { getUser, registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 const RegisterForm = () => {
   const [image, setImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter()
+  const {setIsLoading, setUser} = useUser()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
+    setIsLoading(true)
     if (image) {
       const imageUrl = await uploadImage(image);
       data.profileImage = imageUrl;
@@ -33,7 +36,11 @@ const RegisterForm = () => {
     console.log(result)
     if(result?.success){
       toast.success(result.message)
-      router.push("/dashboard")
+      const user = await getUser()
+      console.log(user)
+      setUser(user)
+      setIsLoading(false)
+      router.push("/")
     }else{
       toast.error(result.message)
     }

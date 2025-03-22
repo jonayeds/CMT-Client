@@ -12,19 +12,19 @@ import { Button } from "../ui/button";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-
+import { useUser } from "@/context/UserContext";
 const LoginForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter()
+    const {setUser} = useUser()
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         console.log(data)
       setLoading(true);
-
       const result = await loginUser(data)
-      console.log(result)
           if(result?.success){
             toast.success(result?.message)
-            router.push("/dashboard")
+            setUser(result?.data?.data)
+            router.push("/")
           }else{
             toast.error(result?.message)
           }

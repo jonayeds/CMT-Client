@@ -7,6 +7,8 @@ import {
   Home,
   LayoutDashboard,
   LogOut,
+  Plus,
+  PlusCircle,
   User2,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -20,6 +22,8 @@ import {
 } from "../ui/dropdown-menu";
 import { Skeleton } from "../ui/skeleton";
 import { logoutUser } from "@/services/AuthService";
+import MobileNavigation from "./MobileNavigation";
+import { IUser } from "@/types/user";
 const Navbar = () => {
   const path = usePathname();
   const { user, isLoading, setUser } = useUser();
@@ -30,18 +34,21 @@ const Navbar = () => {
     setUser(null)
   }
   
-  return isLoading? <div className="flex justify-between items-center px-[4vw]  py-6">
-    <Skeleton className="w-[10vw] h-12 rounded-full"  />
-    <Skeleton className="w-[30vw] h-12 rounded-full" />
-    <Skeleton className="w-[20vw] h-12 rounded-full" />
+  return isLoading? <div className="flex   justify-between items-center px-[4vw]  py-8">
+    <Skeleton className="w-[10vw] h-8  rounded-full"  />
+    <Skeleton className="w-[30vw] h-8 rounded-full" />
+    <Skeleton className="w-[20vw] h-8 rounded-full" />
   </div> : (
     <div className="flex justify-between items-center px-[4vw]  py-6">
-      <div>
+      <div className="flex items-center gap-4">
+        <div className="lg:hidden">
+        <MobileNavigation path={path} user={user as IUser} />
+        </div>
         <Link href={"/"} className="logo text-4xl ">
           Classroom
         </Link>
       </div>
-      <div className="flex gap-12 text-black bg-[#f4f4f4] px-0 rounded-full py-0">
+      <div className="lg:flex gap-12 text-black bg-[#f4f4f4] px-0 rounded-full py-0 hidden">
         <Link
           href={"/"}
           className={`${
@@ -51,15 +58,24 @@ const Navbar = () => {
           <Home className="w-6" /> Home
         </Link>
         <Link
-          href={"/about"}
+          href={ user ? "/my-classes" : "/about"}
           className={`${
             path === "/about" ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
           <File />
-          About
+          { user ? "My Classes" : "About"}
         </Link>
-        <Link
+        {
+          user ? <Link
+          href={user.role === "student" ? "/join-class" : "/create-class"}
+          className={`${
+            path === "/contact" ? activeNav : inactiveNav
+          } py-2 px-4 rounded-full flex items-center gap-1 `}
+        >
+          {user.role === "student" ? <Plus /> : <PlusCircle />}
+          {user.role === "student" ? "Join Class" : "Create Class"}
+        </Link> :  <Link
           href={"/contact"}
           className={`${
             path === "/contact" ? activeNav : inactiveNav
@@ -68,6 +84,8 @@ const Navbar = () => {
           <Contact />
           Contact
         </Link>
+        }
+        
       </div>
       { user ? (
         <DropdownMenu>

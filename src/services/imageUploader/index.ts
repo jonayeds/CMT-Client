@@ -7,7 +7,6 @@ cloudinary.config({
 });
 export const uploadImage = async(image:string)=>{
     try {
-        console.log(image)
         const result = await cloudinary.uploader.upload(image, {
             resource_type: "auto",
         })

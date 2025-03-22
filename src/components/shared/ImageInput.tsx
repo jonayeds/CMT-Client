@@ -7,7 +7,6 @@ import { toast } from "sonner"
 const ImageInput = ({image, setImage}: {image: string, setImage: (image: string) => void}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    console.log(file)
     if (file) {
       if(file.size > 1024 * 1024 * 5){
         toast.error("Image size must be less than 5MB")
@@ -20,7 +19,6 @@ const ImageInput = ({image, setImage}: {image: string, setImage: (image: string)
       reader.readAsDataURL(file)
     }
   }
-console.log(image)
   const handleClearImage = ()=>{
     setImage("")
   }
