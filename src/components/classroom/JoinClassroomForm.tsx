@@ -19,7 +19,6 @@ const JoinClassroomForm = () => {
     const router = useRouter()
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true)
-        console.log(data)
       const result = await joinClassroom(data)
           if(result?.success){
             toast.success(result?.message)
@@ -27,12 +26,20 @@ const JoinClassroomForm = () => {
             router.push("/")
           }else{
             toast.error(result?.message)
+            setIsLoading(false)
           }
     };
     const form = useForm();
   
-    return isLoading? <div className="flex justify-center items-center h-screen"><Loader2 className="w-10 h-10 animate-spin" /></div> : (
-      <div className="bg-white shadow-lg border border-gray-100  py-4  px-8 rounded-2xl hover:shadow-md hover:shadow-gray-200 duration-500">
+    return  (
+
+      <div className="bg-white shadow-lg border border-gray-100  py-4  px-8 rounded-2xl hover:shadow-md hover:shadow-gray-200 duration-500 relative overflow-hidden" >
+        {
+            isLoading && <div className="bg-white absolute top-0 left-0  w-full h-full flex items-center justify-center">
+            <div className="flex justify-center items-center h-screen"><Loader2 className="w-10 h-10 animate-spin" /></div>
+            </div>
+        }
+        
         <h1 className="font-serif uppercase text-2xl text-center  text-[#4EAB60]">
           Join Classroom
         </h1>

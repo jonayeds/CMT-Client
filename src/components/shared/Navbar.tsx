@@ -100,14 +100,18 @@ const Navbar = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="border-gray-200 bg-white">
             <DropdownMenuItem>
+              <Link href={"/profile"} className="flex items-center gap-2 w-full">
               <User2 />
               Profile
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
+            <Link href={"/profile"} className="flex items-center gap-2 w-full">
               <LayoutDashboard />
               Dashboard
+            </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout} >
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer" >
               <LogOut />
               Logout
             </DropdownMenuItem>
