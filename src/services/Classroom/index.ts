@@ -20,3 +20,19 @@ export const createClassroom = async(data:FieldValues)=>{
         console.log(error)
     }
 }
+
+export const getMyClasses = async()=>{
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/my-classrooms`,{
+            method:"GET",
+            headers:{
+                "Authorization":`${token}`
+            }
+        })
+        const response = await result.json()
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}

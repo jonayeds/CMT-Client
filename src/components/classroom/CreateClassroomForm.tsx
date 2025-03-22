@@ -185,7 +185,7 @@ const CreateClassroomForm = () => {
               control={form.control}
               name={`classDays.${idx}.value`}
               render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-full duration-100">
                   <FormLabel></FormLabel>
 
                   <FormControl>
@@ -196,6 +196,7 @@ const CreateClassroomForm = () => {
                         field.onChange(e)
                         onChangeDay()
                       }}
+                      
                       >
                       <FormControl>
                         <SelectTrigger className="w-full">
@@ -369,6 +370,7 @@ const CreateClassroomForm = () => {
           <div className="flex justify-center">
             <Button
               type="submit"
+              disabled={classDays.length<1 || startTime.hour === "" || startTime.minute === "" || endTime.hour === "" || endTime.minute === ""}
               className="rounded-lg mt-4 from-[#58c38c] bg-gradient-to-b hover:bg-gradient-to-t   to-[#4EAB60]  duration-500  text-white "
             >
               Submit
