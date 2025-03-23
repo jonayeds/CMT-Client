@@ -1,6 +1,7 @@
 "use client";
 
 import FileInput from "@/components/shared/FileInput";
+import LinkInput from "@/components/shared/LinkInput";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -93,8 +94,9 @@ const UploadContentForm = () => {
             }
             
           </div>
-          <div className="w-full">
+          <div className="w-full flex gap-2">
             <FileInput setFiles={setFiles} />
+            <LinkInput/>
           </div>
 
           <div className="flex justify-center">
