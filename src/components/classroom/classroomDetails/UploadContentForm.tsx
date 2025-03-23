@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -93,8 +93,11 @@ const UploadContentForm = () => {
             {files?.map((file, idx) => (
               <div
                 key={idx}
-                className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
+                className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl relative "
               >
+                 <div 
+                onClick={()=>setFiles(prev => prev.filter((p,i)=> i!== idx ))}
+                 className="absolute cursor-pointer top-2 right-2  text-gray-700"><X/></div>
                 <span className="hover:underline  truncate">{file?.name}</span>
                 <span className="text-gray-600 opacity-80">
                   {file?.type} File
@@ -110,8 +113,11 @@ const UploadContentForm = () => {
             {links.map((link, idx) => (
               <div
                 key={idx}
-                className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
+                className="flex w-full relative  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
               >
+                <div 
+                onClick={()=>setLinks(prev => prev.filter((p,i)=> i!== idx ))}
+                 className="absolute cursor-pointer top-2 right-2  text-gray-700"><X/></div>
                 <p className="font-light text-lg">Link {idx + 1}</p>
                 <a
                   href={link}
@@ -132,6 +138,7 @@ const UploadContentForm = () => {
             <div className="flex justify-center">
               <Button
                 type="submit"
+                disabled={((links.length<1) && (files.length<1) ) || (links.length+files.length>10)}
                 className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b   transition  to-[#4EAB60]  duration-700  text-white "
               >
                 Upload
