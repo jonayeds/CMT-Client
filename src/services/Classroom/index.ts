@@ -50,3 +50,28 @@ export const  joinClassroom = async(data:FieldValues)=>{
     const result  = await res.json()
     return result
 }
+
+export const leaveClassroom =async(classroomId:string)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/leave-classroom/${classroomId}`,{
+        method:"DELETE",
+        headers:{
+            "Authorization":token as string,
+        },
+    })
+    const result  = await res.json()
+    return result
+}
+
+export const deleteClassroom =async(classroomId:string)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/${classroomId}`,{
+        method:"DELETE",
+        headers:{
+            "Authorization":token as string,
+        },
+    })
+    const result  = await res.json()
+    return result
+}
+

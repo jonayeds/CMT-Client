@@ -13,7 +13,12 @@ import ImageInput from "../shared/ImageInput";
 import { useState } from "react";
 import { uploadImage } from "@/services/imageUploader";
 import { Select } from "@radix-ui/react-select";
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { getUser, registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -23,31 +28,35 @@ import { useUser } from "@/context/UserContext";
 const RegisterForm = () => {
   const [image, setImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter()
-  const {setIsLoading, setUser} = useUser()
+  const router = useRouter();
+  const { setIsLoading, setUser } = useUser();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    setIsLoading(true)
+    setIsLoading(true);
     if (image) {
       const imageUrl = await uploadImage(image);
       data.profileImage = imageUrl;
     }
-    const result = await registerUser(data)
-    console.log(result)
-    if(result?.success){
-      toast.success(result.message)
-      const user = await getUser()
-      setUser(user)
-      setIsLoading(false)
-      router.push("/")
-    }else{
-      toast.error(result.message)
+    const result = await registerUser(data);
+    console.log(result);
+    if (result?.success) {
+      toast.success(result.message);
+      const user = await getUser();
+      setUser(user);
+      setIsLoading(false);
+      router.push("/");
+    } else {
+      toast.error(result.message);
     }
     setLoading(false);
   };
   const form = useForm();
 
-  return loading? <div className="flex justify-center items-center h-screen"><Loader2 className="w-10 h-10 animate-spin" /></div> : (
+  return loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Loader2 className="w-10 h-10 animate-spin" />
+    </div>
+  ) : (
     <div className="bg-white shadow-lg border border-gray-100  py-4  px-8 rounded-2xl hover:shadow-md hover:shadow-gray-200 duration-500">
       <h1 className="font-serif uppercase text-2xl text-center  text-[#4EAB60]">
         Register
@@ -111,26 +120,30 @@ const RegisterForm = () => {
             )}
           />
 
-<FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Your Role</FormLabel>
-              <Select  {...field} value={field.value} onValueChange={field.onChange} >
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select your role"  />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="bg-white border border-gray-200">
-                  <SelectItem value="student">Student</SelectItem>
-                  <SelectItem value="faculty">Faculty</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Your Role</FormLabel>
+                <Select
+                  {...field}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-white border border-gray-200">
+                    <SelectItem value="student">Student</SelectItem>
+                    <SelectItem value="faculty">Faculty</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}
@@ -153,7 +166,7 @@ const RegisterForm = () => {
           <div className="flex justify-center">
             <Button
               type="submit"
-              className="rounded-lg mt-4 from-[#58c38c] bg-gradient-to-b hover:bg-gradient-to-t   to-[#4EAB60]  duration-500  text-white "
+              className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b    transition  to-[#4EAB60]  duration-700  text-white "
             >
               Submit
             </Button>

@@ -8,7 +8,7 @@ const ProfilePage = async() => {
   return (
     <div className="min-h-screen flex relative flex-col justify-center items-center">
         <div className="absolute top-[7vh] left-[10vw] "><Link href={"/"} className="flex items-center gap-2"><ChevronLeft/> Home</Link></div>
-        <div className="flex flex-col items-center justify-center bg-gray-100 p-8 rounded-xl my-10 hover:shadow-xl shadow-md duration-700">
+        <div className="flex flex-col items-center justify-center bg-gray-100 p-8 rounded-xl my-10 hover:shadow-xl shadow-md duration-700 md:min-w-3xs min-w-[80vw]">
 
         <Avatar className="size-32 border-5 border-white">
               <AvatarImage src={user?.profileImage} />

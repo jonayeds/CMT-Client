@@ -82,7 +82,7 @@ const LoginForm = () => {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                className="rounded-lg mt-4 from-[#58c38c] bg-gradient-to-b hover:bg-gradient-to-t   to-[#4EAB60]  duration-500  text-white "
+                className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b    transition  to-[#4EAB60]  duration-700  text-white "
               >
                 Submit
               </Button>

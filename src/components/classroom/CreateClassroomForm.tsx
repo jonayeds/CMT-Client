@@ -118,7 +118,7 @@ const CreateClassroomForm = () => {
       <Loader2 className="w-10 h-10 animate-spin" />
     </div>
   ) : (
-    <div className="bg-white shadow-lg border border-gray-100  py-4  px-8 rounded-2xl hover:shadow-md hover:shadow-gray-200 duration-500">
+    <div className="bg-white shadow-md border border-gray-100  py-4  px-8 rounded-2xl hover:shadow-xl hover:shadow-gray-200 duration-500">
       <h1 className="font-serif uppercase text-2xl text-center  text-[#4EAB60]">
         Create Classroom
       </h1>
@@ -175,6 +175,7 @@ const CreateClassroomForm = () => {
               type="button"
               size="icon"
               onClick={addClassDay}
+              className="disabled:text-gray-300"
               >
               <PlusCircle className="w-4 h-4" />
             </Button>
@@ -371,7 +372,7 @@ const CreateClassroomForm = () => {
             <Button
               type="submit"
               disabled={classDays.length<1 || startTime.hour === "" || startTime.minute === "" || endTime.hour === "" || endTime.minute === ""}
-              className="rounded-lg mt-4 from-[#58c38c] bg-gradient-to-b hover:bg-gradient-to-t   to-[#4EAB60]  duration-500  text-white "
+              className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b  transition  to-[#4EAB60]  duration-700  text-white "
             >
               Submit
             </Button>
