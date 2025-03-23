@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 import { FieldValues } from "react-hook-form"
 
@@ -28,6 +29,9 @@ export const getMyClasses = async()=>{
             method:"GET",
             headers:{
                 "Authorization":`${token}`
+            },
+            next:{
+                tags:["leave", "delete"]
             }
         })
         const response = await result.json()
@@ -36,6 +40,24 @@ export const getMyClasses = async()=>{
         console.log(error)
     }
 }
+
+export const getASingleClassroom = async(classroomId:string)=>{
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/${classroomId}`,{
+            method:"GET",
+            headers:{
+                "Authorization":`${token}`
+            },
+        })
+        const response = await result.json()
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 export const  joinClassroom = async(data:FieldValues)=>{
     const token = (await cookies()).get("accessToken")?.value
@@ -59,6 +81,7 @@ export const leaveClassroom =async(classroomId:string)=>{
             "Authorization":token as string,
         },
     })
+    revalidateTag("leave")
     const result  = await res.json()
     return result
 }
@@ -71,6 +94,7 @@ export const deleteClassroom =async(classroomId:string)=>{
             "Authorization":token as string,
         },
     })
+    revalidateTag("delete")
     const result  = await res.json()
     return result
 }

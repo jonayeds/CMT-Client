@@ -1,15 +1,23 @@
-import { getUser } from "./services/AuthService"
+import {  getUserFromCookies } from "./services/AuthService"
 import { NextRequest, NextResponse } from "next/server"
+import { IJwtDecodedUser} from "./types/user"
 
 
 const privateRoutes = {
-    student:["/my-classes", "/join-classroom", "/dashboard"],
+    student:["/my-classes", "/join-classroom", "/dashboard" ],
     faculty:["/create-classroom", "/dashboard", "/my-classes"],
 }
 const authRoutes = ["/login", "/register"]
 export const middleware = async(request:NextRequest)=>{
-    const user = await getUser()
+    const user = await getUserFromCookies() as IJwtDecodedUser | null
+
     const {pathname} = request.nextUrl
+    console.log(pathname)
+    
+    const match = pathname.match(/^\/my-classes\/([^/]+)$/);
+    if(match && user){
+        return NextResponse.next()
+    }
     if(!user && authRoutes?.includes(pathname)){
         return NextResponse.next()
     }
@@ -31,5 +39,6 @@ export const config = {
         "/dashboard",
         "/login",
         "/register",
+        "/my-classes/:classroomId"
     ]
 }

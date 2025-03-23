@@ -1,3 +1,5 @@
+import { JwtPayload } from "jwt-decode";
+
 export interface IUser{
     _id:string;
     name:string;
@@ -7,4 +9,10 @@ export interface IUser{
     profileImage:string;
     createdAt:string;
     updatedAt:string;
+}
+
+export interface IJwtDecodedUser extends JwtPayload{
+    _id:string;
+    email:string;
+    role:"student" | "faculty";
 }

@@ -2,41 +2,46 @@
 import { IClassroom } from "@/types/classroom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useUser } from "@/context/UserContext";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 import { deleteClassroom, leaveClassroom } from "@/services/Classroom";
 import { toast } from "sonner";
 
 const ClassroomCard = ({ classroom }: { classroom: IClassroom }) => {
 
   const { user } = useUser();
+  const [loading, setLoading] = useState(false)
   const handleDeleteClassroom  = async(e: MouseEvent)=>{
     e.preventDefault()
+    setLoading(true)
     const result = await deleteClassroom(classroom._id)
-    console.log(result)
     if(result.success){
       toast.success(result?.message)
+      setLoading(false)
     }else{
       toast.error(result?.message)
+      setLoading(false)
     }
   }
   const handleLeaveClassroom =async(e: MouseEvent)=>{
     e.preventDefault()
+    setLoading(true)
     const result = await leaveClassroom(classroom._id)
-    console.log(result)
     if(result.success){
       toast.success(result?.message)
+      setLoading(false)
     }else{
       toast.error(result?.message)
+      setLoading(false)
     }
 
   }
   return (
     <Link
-      href={classroom._id}
+      href={`/my-classes/${classroom._id}`}
       className="border border-gray-200  rounded-xl cursor-pointer shadow-sm hover:shadow-lg overflow-hidden duration-300"
     >
       <div className="bg-gradient-to-tl from-gray-300 to-gray-500 text-white w-full p-4">
@@ -47,7 +52,12 @@ const ClassroomCard = ({ classroom }: { classroom: IClassroom }) => {
               <EllipsisVertical className="hover:scale-125 duration-300 w-8 h-8 rounded-full p-1" />
             </DropdownMenuTrigger>
             <DropdownMenuContent >
-              <Button  variant={"outline"} type="button" onClick={user?.role === "student" ? handleLeaveClassroom : handleDeleteClassroom} className="w-full from-red-400 hover:to-red-700 duration-300 transition to-red-600 bg-gradient-to-br text-white">{user?.role === "student" ? "Leave": "Delete"}</Button>
+              {
+                loading ? <Button  variant={"outline"} type="button" onClick={(e)=>e.preventDefault()} className="w-full from-red-400 hover:to-red-700 duration-300 transition to-red-600 bg-gradient-to-br text-white">
+                  <div className="flex justify-center items-center h-screen"><Loader2 className="w-10 h-10 animate-spin" /></div>
+                </Button> : <Button  variant={"outline"} type="button" onClick={user?.role === "student" ? handleLeaveClassroom : handleDeleteClassroom} className="w-full from-red-400 hover:to-red-700 duration-300 transition to-red-600 bg-gradient-to-br text-white">{user?.role === "student" ? "Leave": "Delete"}</Button>
+              }
+              
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
