@@ -19,10 +19,16 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const UploadContentForm = () => {
-    const [files, setFiles] = useState<{name:string, url:string,type:string}[]>([])
+  const [files, setFiles] = useState<
+    { name: string; url: string; type: string }[]
+  >([]);
+  const [links, setLinks] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    data.contenLinks = links
+
+    data.contentFiles = files.map(file => file.url)
     console.log(data);
     //   setLoading(true);
     //   const result = await loginUser(data)
@@ -51,7 +57,7 @@ const UploadContentForm = () => {
         >
           <FormField
             control={form.control}
-            name="identification"
+            name="title"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Title</FormLabel>
@@ -68,7 +74,7 @@ const UploadContentForm = () => {
           />
           <FormField
             control={form.control}
-            name="identification"
+            name="description"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Description</FormLabel>
@@ -84,28 +90,53 @@ const UploadContentForm = () => {
             )}
           />
           <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-4 grid-cols-1">
-            {
-                files?.map((file,idx)=><div key={idx} className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl  ">
+            {files?.map((file, idx) => (
+              <div
+                key={idx}
+                className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
+              >
                 <span className="hover:underline  truncate">{file?.name}</span>
                 <span className="text-gray-600 opacity-80">
                   {file?.type} File
                 </span>
-              </div>)
-            }
-            
+              </div>
+            ))}
           </div>
-          <div className="w-full flex gap-2">
-            <FileInput setFiles={setFiles} />
-            <LinkInput/>
-          </div>
+          {links.length > 0 && (
+            <hr className="border-gray-100 border my-4    w-full " />
+          )}
 
-          <div className="flex justify-center">
-            <Button
-              type="submit"
-              className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b    transition  to-[#4EAB60]  duration-700  text-white "
-            >
-              Submit
-            </Button>
+          <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-4 grid-cols-1">
+            {links.map((link, idx) => (
+              <div
+                key={idx}
+                className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
+              >
+                <p className="font-light text-lg">Link {idx + 1}</p>
+                <a
+                  href={link}
+                  target="#"
+                  className="hover:underline text-blue-500 truncate"
+                >
+                  {link}
+                </a>
+              </div>
+            ))}
+          </div>
+          <hr className="border-gray-100 border my-4    w-full " />
+          <div className="w-full flex justify-between items-center ">
+            <div className="flex gap-2">
+              <FileInput setFiles={setFiles} />
+              <LinkInput setLinks={setLinks} />
+            </div>
+            <div className="flex justify-center">
+              <Button
+                type="submit"
+                className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b   transition  to-[#4EAB60]  duration-700  text-white "
+              >
+                Upload
+              </Button>
+            </div>
           </div>
         </form>
       </Form>

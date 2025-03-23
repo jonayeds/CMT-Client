@@ -9,9 +9,9 @@ import {
 } from "../ui/dialog";
 import { Link } from "lucide-react";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-const LinkInput = () => {
+const LinkInput = ({setLinks}:{setLinks:Dispatch<SetStateAction<string[]>>}) => {
     const [link,setLink] = useState("")
   return (
     <Dialog>
@@ -33,7 +33,7 @@ const LinkInput = () => {
           <DialogClose  className=" text-green-600 cursor-pointer">
             Cancel
           </DialogClose>
-          <DialogClose disabled={link?false :true} className="text-green-600 cursor-pointer disabled:text-gray-400">
+          <DialogClose  onClick={()=>setLinks(prev => [...prev, link])} disabled={link?false :true} className="text-green-600 cursor-pointer disabled:text-gray-400">
             Add Link
           </DialogClose>
         </div>

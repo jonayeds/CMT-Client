@@ -1,15 +1,13 @@
 "use client"
 import { Upload } from "lucide-react";
 import { Input } from "../ui/input";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction  } from "react";
 
 const FileInput = ({setFiles}:{setFiles: Dispatch<SetStateAction<{
     name: string;
     url: string;
     type: string;
 }[]>>}) => {
-    
-    // const [fileType, setFileType] = useState<string | null>(null);
 
     const handleFileInput =(event: React.ChangeEvent<HTMLInputElement>)=>{
         const file = event.target.files?.[0];
