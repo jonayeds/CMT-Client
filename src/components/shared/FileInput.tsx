@@ -3,24 +3,12 @@ import { Upload } from "lucide-react";
 import { Input } from "../ui/input";
 import { Dispatch, SetStateAction  } from "react";
 
-const FileInput = ({setFiles}:{setFiles: Dispatch<SetStateAction<{
-    name: string;
-    url: string;
-    type: string;
-}[]>>}) => {
+const FileInput = ({setFiles}:{setFiles: Dispatch<SetStateAction<File[]>>}) => {
 
     const handleFileInput =(event: React.ChangeEvent<HTMLInputElement>)=>{
         const file = event.target.files?.[0];
         if(!file) return
-        const fileReader = new FileReader()
-        fileReader.onloadend =() =>{
-            setFiles(prev=> [...prev,{
-                name:file.name,
-                url:fileReader.result as string,
-                type:file.type.split("/")[1]
-            }] )
-        }
-        fileReader.readAsDataURL(file)
+            setFiles(prev=> [...prev, file] )
     }
   return (
     <div>

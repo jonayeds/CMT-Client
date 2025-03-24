@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { uploadContentToDropbox } from "@/services/Content";
 import { Loader2, X } from "lucide-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -20,25 +21,24 @@ import { toast } from "sonner";
 
 const UploadContentForm = () => {
   const [files, setFiles] = useState<
-    { name: string; url: string; type: string }[]
+    File[]
   >([]);
   const [links, setLinks] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     data.contenLinks = links
-
-    data.contentFiles = files.map(file => file.url)
-    console.log(data);
-    //   setLoading(true);
-    //   const result = await loginUser(data)
-    //       if(result?.success){
-    //         toast.success(result?.message)
-    //         router.push("/")
-    //       }else{
-    //         toast.error(result?.message)
-    //       }
-    //   setLoading(false);
+    console.log(files);
+      setLoading(true);
+      const result = await uploadContentToDropbox(files)
+          // if(result?.success){
+          //   toast.success(result?.message)
+          //   // router.push("/")
+          // }else{
+          //   toast.error(result?.message)
+          // }
+          console.log(result)
+      setLoading(false);
   };
   const form = useForm();
   return loading ? (
@@ -100,7 +100,7 @@ const UploadContentForm = () => {
                  className="absolute cursor-pointer top-2 right-2  text-gray-700"><X/></div>
                 <span className="hover:underline  truncate">{file?.name}</span>
                 <span className="text-gray-600 opacity-80">
-                  {file?.type} File
+                  {file?.type.split("/")[1]} File
                 </span>
               </div>
             ))}
@@ -139,7 +139,7 @@ const UploadContentForm = () => {
               <Button
                 type="submit"
                 disabled={((links.length<1) && (files.length<1) ) || (links.length+files.length>10)}
-                className="rounded-lg mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b   transition  to-[#4EAB60]  duration-700  text-white "
+                className="rounded-lg  mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b   transition  to-[#4EAB60]  duration-700  text-white "
               >
                 Upload
               </Button>
