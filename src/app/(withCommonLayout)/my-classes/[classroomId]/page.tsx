@@ -37,7 +37,7 @@ const ClassroomDetailPage = async ({
           <ClassroomBanner classroom={await classroom} />
         </TabsContent>
         <TabsContent value="upload">
-          <UploadContentForm/>
+          <UploadContentForm classroomId={classroom._id.toString()}/>
         </TabsContent>
       </Tabs>
     </div>

@@ -10,16 +10,14 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { uploadContentToDropbox } from "@/services/Content";
+import { uploadClassroomContent, uploadContentToDropbox } from "@/services/Content";
 import { Loader2, X } from "lucide-react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UploadContentForm = () => {
+const UploadContentForm = ({classroomId}:{classroomId:string}) => {
   const [files, setFiles] = useState<
     File[]
   >([]);
@@ -28,16 +26,23 @@ const UploadContentForm = () => {
   // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     data.contenLinks = links
-    console.log(files);
       setLoading(true);
-      const result = await uploadContentToDropbox(files)
-          // if(result?.success){
-          //   toast.success(result?.message)
-          //   // router.push("/")
-          // }else{
-          //   toast.error(result?.message)
-          // }
-          console.log(result)
+      const {fileUrls} = await uploadContentToDropbox(files)
+      console.log(fileUrls)
+      data.contentFiles = fileUrls
+      data.classroom = classroomId
+      console.log(data.contentFiles)
+      if( data.contentFiles?.length === 0){
+        toast.error("File was not uploaded to cloud!!")
+        return
+      }
+      const result = await uploadClassroomContent(data)
+      console.log(result)
+          if(result?.success){ 
+            toast.success(result?.message)
+          }else{
+            toast.error(result?.message)
+          }
       setLoading(false);
   };
   const form = useForm();
@@ -106,7 +111,7 @@ const UploadContentForm = () => {
             ))}
           </div>
           {links.length > 0 && (
-            <hr className="border-gray-100 border my-4    w-full " />
+            <hr className="border-gray-100 border my-4  w-full " />
           )}
 
           <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-4 grid-cols-1">
