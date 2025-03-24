@@ -3,6 +3,7 @@
 import { cookies } from "next/headers"
 import { FieldValues } from "react-hook-form"
 import { jwtDecode } from "jwt-decode"
+import { IJwtDecodedUser } from "@/types/user"
 
 export const registerUser = async(data:FieldValues)=>{
     try {
@@ -62,7 +63,7 @@ export const getUserFromCookies =async()=>{
     if(!token){
         return null
     }
-    const decodedToken = jwtDecode(token)
+    const decodedToken = jwtDecode(token) as IJwtDecodedUser
     return decodedToken
 }
 

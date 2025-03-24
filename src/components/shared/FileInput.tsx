@@ -22,7 +22,7 @@ const FileInput = ({setFiles}:{setFiles: Dispatch<SetStateAction<File[]>>}) => {
       <Input
         type="file"
         id="file"
-        accept=".ppt,.pdf,.docx,.doc,.pptx"
+        accept=".ppt,.pdf,.docx,.doc,.pptx,.jpg"
         className="hidden"
         onChange={handleFileInput}
       />

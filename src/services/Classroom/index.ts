@@ -98,4 +98,15 @@ export const deleteClassroom =async(classroomId:string)=>{
     const result  = await res.json()
     return result
 }
+export const getClassStudents =async(classroomId:string)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/get-students/${classroomId}`,{
+        method:"GET",
+        headers:{
+            "Authorization":token as string,
+        },
+    })
+    const result  = await res.json()
+    return result
+}
 

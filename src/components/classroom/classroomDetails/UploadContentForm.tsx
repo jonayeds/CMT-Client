@@ -11,39 +11,40 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { uploadClassroomContent, uploadContentToDropbox } from "@/services/Content";
+import {
+  uploadClassroomContent,
+  uploadContentToDropbox,
+} from "@/services/Content";
 import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UploadContentForm = ({classroomId}:{classroomId:string}) => {
-  const [files, setFiles] = useState<
-    File[]
-  >([]);
+const UploadContentForm = ({ classroomId }: { classroomId: string }) => {
+  const [files, setFiles] = useState<File[]>([]);
   const [links, setLinks] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    data.contenLinks = links
-      setLoading(true);
-      const {fileUrls} = await uploadContentToDropbox(files)
-      console.log(fileUrls)
-      data.contentFiles = fileUrls
-      data.classroom = classroomId
-      console.log(data.contentFiles)
-      if( data.contentFiles?.length === 0){
-        toast.error("File was not uploaded to cloud!!")
-        return
-      }
-      const result = await uploadClassroomContent(data)
-      console.log(result)
-          if(result?.success){ 
-            toast.success(result?.message)
-          }else{
-            toast.error(result?.message)
-          }
-      setLoading(false);
+    data.contenLinks = links;
+    setLoading(true);
+    const { fileUrls } = await uploadContentToDropbox(files);
+    console.log(fileUrls);
+    data.contentFiles = fileUrls;
+    data.classroom = classroomId;
+    console.log(data.contentFiles);
+    if (data.contentFiles?.length === 0) {
+      toast.error("File was not uploaded to cloud!!");
+      return;
+    }
+    const result = await uploadClassroomContent(data);
+    console.log(result);
+    if (result?.success) {
+      toast.success(result?.message);
+    } else {
+      toast.error(result?.message);
+    }
+    setLoading(false);
   };
   const form = useForm();
   return loading ? (
@@ -100,12 +101,20 @@ const UploadContentForm = ({classroomId}:{classroomId:string}) => {
                 key={idx}
                 className="flex w-full  flex-col border-gray-200 border  px-8 py-4 rounded-xl relative "
               >
-                 <div 
-                onClick={()=>setFiles(prev => prev.filter((p,i)=> i!== idx ))}
-                 className="absolute cursor-pointer top-2 right-2  text-gray-700"><X/></div>
+                <div
+                  onClick={() =>
+                    setFiles((prev) => prev.filter((p, i) => i !== idx))
+                  }
+                  className="absolute cursor-pointer top-2 right-2  text-gray-700"
+                >
+                  <X />
+                </div>
                 <span className="hover:underline  truncate">{file?.name}</span>
-                <span className="text-gray-600 opacity-80">
-                  {file?.type.split("/")[1]} File
+                <span className="text-gray-600 opacity-80 truncate">
+                  {file.type === "application/pdf" ||file.type === "image/jpeg"
+                    ? file?.type.split("/")[file.type.split("/").length - 1]
+                    : file?.type.split(".")[file.type.split(".").length - 1]}
+                  {" "}File
                 </span>
               </div>
             ))}
@@ -120,9 +129,14 @@ const UploadContentForm = ({classroomId}:{classroomId:string}) => {
                 key={idx}
                 className="flex w-full relative  flex-col border-gray-200 border  px-8 py-4 rounded-xl  "
               >
-                <div 
-                onClick={()=>setLinks(prev => prev.filter((p,i)=> i!== idx ))}
-                 className="absolute cursor-pointer top-2 right-2  text-gray-700"><X/></div>
+                <div
+                  onClick={() =>
+                    setLinks((prev) => prev.filter((p, i) => i !== idx))
+                  }
+                  className="absolute cursor-pointer top-2 right-2  text-gray-700"
+                >
+                  <X />
+                </div>
                 <p className="font-light text-lg">Link {idx + 1}</p>
                 <a
                   href={link}
@@ -143,7 +157,10 @@ const UploadContentForm = ({classroomId}:{classroomId:string}) => {
             <div className="flex justify-center">
               <Button
                 type="submit"
-                disabled={((links.length<1) && (files.length<1) ) || (links.length+files.length>10)}
+                disabled={
+                  (links.length < 1 && files.length < 1) ||
+                  links.length + files.length > 10
+                }
                 className="rounded-lg  mt-4 from-[#58c38c] hover:to-[#58c38c] hover:from-[#4EAB60] bg-gradient-to-b   transition  to-[#4EAB60]  duration-700  text-white "
               >
                 Upload

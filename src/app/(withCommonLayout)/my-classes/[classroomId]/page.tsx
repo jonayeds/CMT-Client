@@ -1,7 +1,9 @@
 import ClassroomBanner from "@/components/classroom/classroomDetails/ClassroomBanner";
+import PeopleList from "@/components/classroom/classroomDetails/PeopleList";
 import UploadContentForm from "@/components/classroom/classroomDetails/UploadContentForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getASingleClassroom } from "@/services/Classroom";
+import { getUserFromCookies } from "@/services/AuthService";
+import { getASingleClassroom, getClassStudents } from "@/services/Classroom";
 
 const ClassroomDetailPage = async ({
   params,
@@ -9,7 +11,10 @@ const ClassroomDetailPage = async ({
   params: { classroomId: string };
 }) => {
   const { classroomId } = await params;
+  const user  = await getUserFromCookies()
+  const role = user?.role;
   const { data: classroom } = await getASingleClassroom(classroomId);
+  const {data:students} = await getClassStudents(classroomId)
   const tabTrigger = "data-[state=active]:shadow-none data-[state=active]:text-green-600 data-[state=active]:border-b-2 duration-300 data-[state=active]:text-lg transition-all  data-[state=active]:border-green-500 border-0 rounded-none py-5 "
   if (!classroom) {
     return (
@@ -28,7 +33,10 @@ const ClassroomDetailPage = async ({
           >
             Class Materials
           </TabsTrigger>
-          <TabsTrigger className={tabTrigger} value="upload">Upload</TabsTrigger>
+           {
+            (role ==="faculty") && <TabsTrigger className={tabTrigger} value="upload">Upload</TabsTrigger>
+           }
+            
           <TabsTrigger className={tabTrigger} value="people">People</TabsTrigger>
         </TabsList>
         <hr className="border-gray-200 border mb-4 -mt-2   w-full " />
@@ -36,8 +44,13 @@ const ClassroomDetailPage = async ({
         <TabsContent value="class-content">
           <ClassroomBanner classroom={await classroom} />
         </TabsContent>
-        <TabsContent value="upload">
-          <UploadContentForm classroomId={classroom._id.toString()}/>
+        {
+            (role ==="faculty") && <TabsContent value="upload">
+            <UploadContentForm classroomId={classroom._id.toString()}/>
+          </TabsContent>
+        }
+        <TabsContent value="people">
+          <PeopleList students={students} faculty={classroom.faculty} role={role as string} />
         </TabsContent>
       </Tabs>
     </div>

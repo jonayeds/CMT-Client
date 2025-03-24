@@ -82,10 +82,6 @@ export const getDropBoxPublicUrl:any = async (filePath: string) => {
       return isLinkExists.links[0].url;
     }
   }
-
-//   const expirationDate = new Date();
-//   expirationDate.setFullYear(expirationDate.getFullYear() + 1);
-//   const expiresAt = expirationDate.toISOString().split(".")[0] + "Z";
   const response = await fetch("https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings", {
     method: "POST",
     headers: {
