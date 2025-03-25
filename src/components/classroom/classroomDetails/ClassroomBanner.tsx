@@ -7,8 +7,8 @@ const ClassroomBanner = ({classroom}:{classroom:IClassroom}) => {
         <h1 className="md:text-[3vw] text-[7vw] font-serif ">{classroom.courseTitle}</h1>
         <p className="my-1">{classroom.classDays.map((day,idx)=>`${day} ${idx+1 < classroom.classDays.length ? "| ": ""}` )}</p>
         <p>{classroom.startTime} - {classroom.endTime}</p>
-        
-    </div>
+        <p className="mt-2"> <span className="">Joining code:</span> <span className="text-sm ml-2 tracking-wider">{classroom.joiningCode}</span></p>
+    </div> 
   )
 }
 

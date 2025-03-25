@@ -1,9 +1,11 @@
 import ClassroomBanner from "@/components/classroom/classroomDetails/ClassroomBanner";
+import ContentContainer from "@/components/classroom/classroomDetails/ContentContainer";
 import PeopleList from "@/components/classroom/classroomDetails/PeopleList";
 import UploadContentForm from "@/components/classroom/classroomDetails/UploadContentForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserFromCookies } from "@/services/AuthService";
 import { getASingleClassroom, getClassStudents } from "@/services/Classroom";
+import { IJwtDecodedUser } from "@/types/user";
 
 const ClassroomDetailPage = async ({
   params,
@@ -43,6 +45,7 @@ const ClassroomDetailPage = async ({
 
         <TabsContent value="class-content">
           <ClassroomBanner classroom={await classroom} />
+          <ContentContainer currentUser={user as IJwtDecodedUser} classroom={classroom}/>
         </TabsContent>
         {
             (role ==="faculty") && <TabsContent value="upload">
@@ -50,7 +53,7 @@ const ClassroomDetailPage = async ({
           </TabsContent>
         }
         <TabsContent value="people">
-          <PeopleList students={students} faculty={classroom.faculty} role={role as string} />
+          <PeopleList students={students} faculty={classroom.faculty} currentUser={user as IJwtDecodedUser} />
         </TabsContent>
       </Tabs>
     </div>

@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   uploadClassroomContent,
   uploadContentToDropbox,
-} from "@/services/Content";
+} from "@/services/Content/contentUpload";
 import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";

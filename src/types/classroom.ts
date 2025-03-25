@@ -7,5 +7,6 @@ export interface IClassroom{
     classDays:string[],
     startTime:string,
     endTime:string,
+    joiningCode:string;
     faculty:IUser
 }
