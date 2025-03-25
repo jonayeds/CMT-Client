@@ -33,6 +33,7 @@ const ContentDetailsPage = async({params}:{params:{contentId:string, classroomId
         </div>
         </div>
         </div>
+            <p className="my-6 text-gray-500 text-sm">{content.description}</p>
         <hr  className="border-gray-200 my-4 "/>
         <div className="grid md:grid-cols-2 grid-cols-1 md:max-w-[70vw] max-w-[90vw] gap-6 mx-auto">
             {

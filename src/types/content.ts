@@ -6,4 +6,5 @@ export interface IContent {
     contentLinks:string[];
     createdAt:Date;
     updatedAt:Date;
+    description:string;
 }

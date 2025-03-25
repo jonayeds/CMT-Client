@@ -12,7 +12,6 @@ export const middleware = async(request:NextRequest)=>{
     const user = await getUserFromCookies() as IJwtDecodedUser | null
 
     const {pathname} = request.nextUrl
-    console.log(pathname)
     
     const match = pathname.match(/^\/my-classes\/([^/]+)$/);
     if(match && user){

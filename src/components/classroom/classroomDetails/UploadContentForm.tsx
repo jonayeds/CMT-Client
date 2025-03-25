@@ -26,14 +26,14 @@ const UploadContentForm = ({ classroomId }: { classroomId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
   // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    data.contenLinks = links;
+    data.contentLinks = links;
     setLoading(true);
     const { fileUrls } = await uploadContentToDropbox(files);
     console.log(fileUrls);
     data.contentFiles = fileUrls;
     data.classroom = classroomId;
     console.log(data.contentFiles);
-    if (data.contentFiles?.length === 0) {
+    if (files.length>0 && data.contentFiles?.length === 0) {
       toast.error("File was not uploaded to cloud!!");
       return;
     }
