@@ -14,6 +14,11 @@ export const middleware = async(request:NextRequest)=>{
     const {pathname} = request.nextUrl
     
     const match = pathname.match(/^\/my-classes\/([^/]+)$/);
+    const isQRCodeGenerator = pathname.match(/^\/my-classes\/([a-fA-F0-9]+)\/attendance-qr-code$/)
+    if(isQRCodeGenerator && (user?.role === "faculty")){
+        console.log("hit here")
+        return NextResponse.next()
+    }
     if(match && user){
         return NextResponse.next()
     }
@@ -38,6 +43,7 @@ export const config = {
         "/dashboard",
         "/login",
         "/register",
-        "/my-classes/:classroomId"
+        "/my-classes/:classroomId",
+        "/my-classes/:classroomId/attendance-qr-code"
     ]
 }

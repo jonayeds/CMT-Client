@@ -51,7 +51,7 @@ const ClassroomDetailPage = async ({
         <hr className="border-gray-200 border mb-4 -mt-2   w-full " />
 
         <TabsContent value="class-content">
-          <ClassroomBanner classroom={await classroom} />
+          <ClassroomBanner role={role as string} classroom={await classroom} />
           <ContentContainer
             currentUser={user as IJwtDecodedUser}
             classroom={classroom}
