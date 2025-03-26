@@ -1,6 +1,7 @@
 
 import { getASingleClassroom } from "@/services/Classroom"
 import { IClassroom } from "@/types/classroom"
+import { isTimeBeetween } from "@/utils/classroom"
 import { Dot } from "lucide-react"
 import moment from "moment"
 import Image from "next/image"
@@ -9,16 +10,9 @@ import QRCode from "qrcode"
 
 const QRGenaretor = async({classroomId}:{classroomId:string}) => {
   const {data:classroom}:{data:IClassroom} = await getASingleClassroom(classroomId)
-  const now = moment().format("HH:mm")
   const today = moment().format("dddd")
   let qrCode;
-  const currentTime = now.split(":").map(t=>Number(t))
-  const currentTimeInMinutes = currentTime[0] * 60 + currentTime[1]
-  const startTime = classroom.startTime.split(":").map(t=>Number(t))
-  const startTimeInMinutes = startTime[0] * 60 + startTime[1]
-  const endTime = classroom.endTime.split(":").map(t=>Number(t))
-  const endTimeInMinutes = endTime[0] * 60 + endTime[1]
-  const isBetweenClassTime = (currentTimeInMinutes >= startTimeInMinutes) ? (currentTimeInMinutes <= endTimeInMinutes) : false
+  const isBetweenClassTime = isTimeBeetween(classroom.startTime, classroom.endTime)
   if(classroom.classDays.includes(today) && isBetweenClassTime){
     qrCode = await QRCode.toDataURL(classroomId)
   }
