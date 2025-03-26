@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -144,6 +145,7 @@ export const uploadClassroomContent = async (payload: FieldValues) => {
     },
     body: JSON.stringify(payload),
   });
+  revalidateTag("content")
   const data = await result.json();
   return data;
 };

@@ -7,6 +7,9 @@ export const getClassroomContents = async(classroomId:string)=>{
            headers:{
                "Authorization":token as string,
            },
+           next:{
+               tags:["content"]
+           }
        })
        const result  = await res.json()
        return result

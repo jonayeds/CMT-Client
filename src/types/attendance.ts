@@ -4,6 +4,7 @@ import { IUser } from "./user";
 export interface IAttendance{
     classroom:IClassroom ;
     student:IUser ;
+    present:number;
     classes:number;
     absent:number;
     late:number;

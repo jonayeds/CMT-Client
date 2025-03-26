@@ -105,6 +105,9 @@ export const getClassStudents =async(classroomId:string)=>{
         headers:{
             "Authorization":token as string,
         },
+        next:{
+            tags:["attendance"]
+        }
     })
     const result  = await res.json()
     return result

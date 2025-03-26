@@ -26,12 +26,20 @@ const PeopleList = ({students, faculty, currentUser}:{students:IAttendance[], fa
         <div className="divide-gray-200 divide-y ">
 
         {
-            students.map(attendance=> <div key={attendance._id} className="flex items-center py-4 gap-3 px-4 ">
+            students.map(attendance=> <div key={attendance._id} className="flex justify-between items-center py-4 gap-3 px-4 ">
+                <div className="flex gap-3 items-center ">
+
                 <Avatar className="border border-gray-200">
                     <AvatarImage src={attendance.student?.profileImage}/>
                     <AvatarFallback>{attendance.student.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <p className="">{attendance.student.name} {(currentUser._id === attendance.student._id) && <span className="text-xs tracking-wider ml-1">(you)</span>}</p>
+                </div>
+                <div className="flex items-center gap-4">
+                    <span>Present: {attendance.present}</span>
+                    <span>Absent: {attendance.absent}</span>
+                    <span>Late: {attendance.late}</span>
+                </div>
             </div>)
         }
         

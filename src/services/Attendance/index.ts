@@ -1,4 +1,5 @@
 "use server"
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const updateAttendance = async (classroomId: string) => {
@@ -13,6 +14,7 @@ export const updateAttendance = async (classroomId: string) => {
       },
     }
   );
+  revalidateTag("attendance");
   const data = await res.json();
   return data;
 };
