@@ -2,8 +2,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeekDays } from "@/constants/classroom";
 import { IClassroom } from "@/types/classroom";
 import CountDown from "./CountDown";
+import { MdArrowDropDown } from "react-icons/md";
+
+import moment from "moment";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Routine = ({ classes }: { classes: IClassroom[] }) => {
+  const today = moment().format("dddd")
   const sortClassTime =(a:IClassroom,b:IClassroom)=>{
     const aStartTime = a.startTime.split(":")
     const aStartMinutes = Number(aStartTime[0]) * 60 + Number(aStartTime[1])
@@ -17,13 +22,31 @@ const Routine = ({ classes }: { classes: IClassroom[] }) => {
         Class Routine
       </h1>
       <div className="mt-8 overflow-auto">
-        <Tabs className="">
+        <Tabs className=""  defaultValue={today}>
           <TabsList className="w-full md:flex justify-around hidden">
             {WeekDays.map((day) => (
               <TabsTrigger key={day} value={day}>
                 {day}
               </TabsTrigger>
             ))}
+          </TabsList>
+          <TabsList className="md:hidden flex  mx-auto">
+            <DropdownMenu >
+            <DropdownMenuTrigger  className="border-none cursor-pointer  flex justify-center px-4 py-2 border border-gray-300 rounded-lg outline-none ">
+        <p className=" border  border-gray-300 px-3 py-1 rounded-md   flex items-center  gap-1">Open <MdArrowDropDown/></p>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        {
+          WeekDays.map((day) => (
+            <DropdownMenuItem key={day}>
+              <TabsTrigger  value={day}>
+              {day}
+            </TabsTrigger>
+            </DropdownMenuItem>
+          ))
+        }
+      </DropdownMenuContent>
+            </DropdownMenu>
           </TabsList>
           {
             WeekDays.map(day=><TabsContent key={day} value={day} className="px-[10vw] mt-16 ">
@@ -37,11 +60,14 @@ const Routine = ({ classes }: { classes: IClassroom[] }) => {
                 {
                   classes.sort(sortClassTime).map((classroom:IClassroom)=><div key={classroom._id}>
                     {
-                      classroom.classDays.includes(day) && <div className="mt-4  grid grid-cols-3 gap-2">
+                      classroom.classDays.includes(day) && <div className="mt-4  grid grid-cols-3 items-center gap-2">
                             
                             <p className="text-sm truncate">{classroom.courseTitle}</p>
-                            <p className="flex justify-center text-sm">{classroom.startTime} - {classroom.endTime}</p>
-                            <CountDown startTime={classroom.startTime} endTime={classroom.endTime}/>
+                            <p className="flex justify-center text-sm "><span className="truncate">{classroom.startTime} - {classroom.endTime}</span></p>
+                            {
+                              today === day ? <CountDown startTime={classroom.startTime} endTime={classroom.endTime}/> : <span className="flex justify-end">...</span>
+                            }
+                            
 
                       </div> 
                     }
