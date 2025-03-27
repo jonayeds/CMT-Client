@@ -1,7 +1,10 @@
+import Routine from "@/components/dashboard/routine/Routine"
+import { getMyClasses } from "@/services/Classroom"
 
-const RoutinePage = () => {
+const RoutinePage = async() => {
+    const {data:classes} = await getMyClasses()
   return (
-    <div></div>
+    <div><Routine classes={classes}/></div>
   )
 }
 

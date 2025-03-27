@@ -19,6 +19,7 @@ import { IUser } from "@/types/user";
 import { PiStudentFill } from "react-icons/pi";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
+import { FaHome } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
 const DashboardNavbar = () => {
@@ -74,6 +75,12 @@ const Sidebar = ({
       <div className="flex flex-col justify-between min-h-[80vh] ">
 
       <div className="flex flex-col gap-4">
+        <NavigationLink
+          href="/"
+          Icon={FaHome}
+          text="Home"
+          />
+
         <NavigationLink
           href="/student/dashboard/attendance"
           Icon={HiPresentationChartLine}
