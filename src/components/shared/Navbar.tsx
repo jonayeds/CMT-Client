@@ -106,7 +106,7 @@ const Navbar = () => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-            <Link href={"/profile"} className="flex items-center gap-2 w-full">
+            <Link href={`/${user.role}/dashboard/attendance`} className="flex items-center gap-2 w-full">
               <LayoutDashboard />
               Dashboard
             </Link>

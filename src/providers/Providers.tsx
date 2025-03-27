@@ -1,12 +1,12 @@
+import { TooltipProvider } from "@/components/ui/tooltip";
+import UserProvider from "@/context/UserContext";
 
-import UserProvider from "@/context/UserContext"
-
-const Providers = ({children}:{children:React.ReactNode}) => {
+const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-        <UserProvider>
-            {children}
-        </UserProvider>
-  )
-}
+    <UserProvider>
+      <TooltipProvider>{children}</TooltipProvider>
+    </UserProvider>
+  );
+};
 
-export default Providers
+export default Providers;

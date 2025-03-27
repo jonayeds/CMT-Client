@@ -33,12 +33,15 @@ const PeopleList = ({students, faculty, currentUser}:{students:IAttendance[], fa
                     <AvatarImage src={attendance.student?.profileImage}/>
                     <AvatarFallback>{attendance.student.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <p className="">{attendance.student.name} {(currentUser._id === attendance.student._id) && <span className="text-xs tracking-wider ml-1">(you)</span>}</p>
+                <p className="md:text-sm text-[3vw] truncate"><span className="">{attendance.student.name} </span> {(currentUser._id === attendance.student._id) && <span className="text-xs tracking-wider ml-1">(you)</span>}</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <span>Present: {attendance.present}</span>
-                    <span>Absent: {attendance.absent}</span>
-                    <span>Late: {attendance.late}</span>
+                <div className="flex items-center md:gap-4 gap-2">
+                    <span className="bg-green-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Present: {attendance.present}</span>
+                    <span className="bg-green-100 px-2 py-1 text-[2vw] rounded-lg md:hidden flex text-gray-600">P... {attendance.present}</span>
+                    <span className="bg-red-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Absent: {attendance.absent}</span>
+                    <span className="bg-red-100 px-2 py-1 text-[2vw] rounded-lg md:hidden flex text-gray-600">A... {attendance.present}</span>
+                    <span className="bg-yellow-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Late: {attendance.late}</span>
+                    <span className="bg-yellow-100 px-2 py-1  rounded-lg text-[2vw] md:hidden flex text-gray-600">L... {attendance.present}</span>
                 </div>
             </div>)
         }

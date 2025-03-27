@@ -35,7 +35,7 @@ const LinkInput = ({setLinks}:{setLinks:Dispatch<SetStateAction<string[]>>}) => 
           </DialogClose>
           <DialogClose  onClick={()=>setLinks(prev => [...prev, link])} disabled={link?false :true} className="text-green-600 cursor-pointer disabled:text-gray-400">
             Add Link
-          </DialogClose>
+          </DialogClose>z
         </div>
       </DialogContent>
     </Dialog>
