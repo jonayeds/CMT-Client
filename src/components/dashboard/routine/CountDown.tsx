@@ -49,7 +49,7 @@ const CountDown = ({
     <p className=" w-max ml-auto text-gray-500 flex">
       {timeDiff === "onGoing" && (
         <span className="bg-green-100 rounded-lg  px-2 py-1 ">
-          Class on going
+          Class on going 
         </span>
       )}
       {timeDiff === "ended" && (
