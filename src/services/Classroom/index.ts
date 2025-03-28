@@ -106,10 +106,27 @@ export const getClassStudents =async(classroomId:string)=>{
             "Authorization":token as string,
         },
         next:{
-            tags:["attendance"]
+            tags:["attendance", "remove"]
         }
     })
     const result  = await res.json()
     return result
 }
+
+
+export const removeStudent =async(payload:{classroomId:string, studentId:string})=>{
+
+    const token = (await cookies()).get("accessToken")?.value
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/remove-student`,{
+        method:"DELETE",
+        headers:{
+            "Authorization":token as string,
+        },
+        body:JSON.stringify(payload)
+    })
+    revalidateTag("remove")
+    const result  = await res.json()
+    return result
+}
+
 
