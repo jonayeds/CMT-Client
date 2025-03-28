@@ -80,14 +80,14 @@ const Sidebar = ({
           Icon={FaHome}
           text="Home"
           />
-
-        <NavigationLink
+        {
+          (user?.role === "student") && <NavigationLink
           href="/student/dashboard/attendance"
           Icon={HiPresentationChartLine}
           text="Attendance Statistics"
           isActive={path === "attendance"}  
           />
-
+        }
         <NavigationLink
           Icon={IoIosTime}
           href={
@@ -104,7 +104,7 @@ const Sidebar = ({
           href={
             user?.role === "student"
             ? "/student/dashboard/manage-classes"
-            : "/faculty/dashboard/manage-students"
+            : "/faculty/dashboard/manage-classes"
           }
             isActive={path === "manage-classes"}
           />
@@ -113,6 +113,7 @@ const Sidebar = ({
           Icon={PiStudentFill}
           text="Manage Students"
           href={"/faculty/dashboard/manage-students"}
+          isActive={path === "manage-students"}
           />
         )}
         </div>

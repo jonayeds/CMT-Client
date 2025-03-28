@@ -32,14 +32,14 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
-      <Table>
+    <div className="rounded-md border border-gray-300 px-2 mt-4">
+      <Table className="">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead className={(header.column.columnDef.header ==='Status') ? 'text-center':""} key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(

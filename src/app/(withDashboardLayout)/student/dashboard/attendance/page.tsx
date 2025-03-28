@@ -1,6 +1,6 @@
 import { getMyAttendances } from "@/services/Attendance"
-import { DataTable } from "./data-table"
-import { columns } from "./columns"
+import { DataTable } from "../../../../../components/dashboard/attendanceStats/data-table"
+import { columns } from "../../../../../components/dashboard/attendanceStats/columns"
 import { IAttendance } from "@/types/attendance"
 
 const AttendanceDashboardPage = async() => {
