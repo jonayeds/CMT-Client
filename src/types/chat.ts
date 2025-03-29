@@ -9,3 +9,13 @@ export interface IChat {
     updatedAt:string;
     _id:string;
 }
+
+export interface IChatStudent{
+    _id:string;
+    status:"accepted" | "rejected" | "pending";
+    classroom:IClassroom;
+    createdAt:string;
+    updatedAt:string;
+    schedule:string;
+    faculty:IUser
+}

@@ -117,20 +117,26 @@ const Sidebar = ({
           isActive={path === "manage-students"}
           />
         )}
-        {user?.role === "faculty" && (
+        {user?.role === "faculty" ? (
           <NavigationLink
           Icon={TbCirclePlus2}
           text="Chat Requests"
           href={"/faculty/dashboard/chat-requests"}
           isActive={path === "chat-requests"}
           />
-        )}
+        ) : (
+          <NavigationLink
+          Icon={TbCirclePlus2}
+          text="Chat Requests"
+          href={"/student/dashboard/chat-requests"}
+          isActive={path === "chat-requests"}
+          />
+        ) }
         </div>
         <NavigationLink
         Icon={()=>Profile({image:user!.profileImage})}
         text={user?.name as string}
         href={"/profile"}
-        
         />
         </div>
     </div>

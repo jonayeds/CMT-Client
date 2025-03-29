@@ -12,7 +12,7 @@ export const getMyChatRequests = async()=>{
                 Authorization:token as string,
             },
             next:{
-                tags:["chatRequest"]
+                tags:["chatRequest", "cancelRequest"]
             }
         })
         
@@ -55,6 +55,23 @@ export const sendChatrequest = async(classroomId:string)=>{
             },
         })
 
+        const data = await result.json()
+        return data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const cancelChatrequest = async(chatId:string)=>{
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chat/cancel-chat-request/${chatId}`,{
+            method:"DELETE",
+            headers:{
+                Authorization:token as string,
+            },
+        })
+        revalidateTag("cancelRequest")
         const data = await result.json()
         return data
 
