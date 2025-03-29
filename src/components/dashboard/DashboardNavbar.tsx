@@ -7,6 +7,7 @@ import { PiChalkboardTeacherFill } from "react-icons/pi";
 import { IoIosTime } from "react-icons/io";
 import NavigationLink from "./NavigationLink";
 import { RiMenuFold2Fill } from "react-icons/ri";
+import { TbCirclePlus2 } from "react-icons/tb";
 import {
   Drawer,
   DrawerContent,
@@ -114,6 +115,14 @@ const Sidebar = ({
           text="Manage Students"
           href={"/faculty/dashboard/manage-students"}
           isActive={path === "manage-students"}
+          />
+        )}
+        {user?.role === "faculty" && (
+          <NavigationLink
+          Icon={TbCirclePlus2}
+          text="Chat Requests"
+          href={"/faculty/dashboard/chat-requests"}
+          isActive={path === "chat-requests"}
           />
         )}
         </div>

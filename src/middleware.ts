@@ -18,6 +18,7 @@ const privateRoutes = {
     "/faculty/dashboard/my-routine",
     "/faculty/dashboard/manage-classes",
     "/faculty/dashboard/manage-students",
+    "/faculty/dashboard/chat-requests",
   ],
 };
 const authRoutes = ["/login", "/register"];
@@ -70,5 +71,6 @@ export const config = {
     "/faculty/dashboard/my-routine",
     "/faculty/dashboard/manage-classes",
     "/faculty/dashboard/manage-students",
+    "/faculty/dashboard/chat-requests",
   ],
 };

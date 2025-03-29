@@ -4,6 +4,7 @@ export interface IUser{
     _id:string;
     name:string;
     email:string;
+    id:string;
     role:"student" | "faculty";
     password:string;
     profileImage:string;

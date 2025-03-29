@@ -106,7 +106,7 @@ export const getClassStudents =async(classroomId:string)=>{
             "Authorization":token as string,
         },
         next:{
-            tags:["attendance", "remove"]
+            tags:["attendance","remove"]
         }
     })
     const result  = await res.json()
@@ -115,18 +115,22 @@ export const getClassStudents =async(classroomId:string)=>{
 
 
 export const removeStudent =async(payload:{classroomId:string, studentId:string})=>{
-
-    const token = (await cookies()).get("accessToken")?.value
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/remove-student`,{
-        method:"DELETE",
-        headers:{
-            "Authorization":token as string,
-        },
-        body:JSON.stringify(payload)
-    })
-    revalidateTag("remove")
-    const result  = await res.json()
-    return result
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/classroom/remove-student`,{
+            method:"DELETE",
+            headers:{
+                "Authorization":token as string,
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(payload)
+        })
+        revalidateTag("remove")
+        const result  = await res.json()
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 

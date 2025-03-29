@@ -13,17 +13,17 @@ const RemoveStudentAction = ({studentId,classroomId}:{studentId:string, classroo
         
     }
   return (
-    <div>
+    <div className="flex justify-center">
         <Dialog>
-            <DialogTrigger>Remove</DialogTrigger>
-            <DialogContent>
+            <DialogTrigger className="bg-red-500 text-white px-3 py-1 rounded-md cursor-pointer">Remove</DialogTrigger>
+            <DialogContent className="bg-white  border-none">
                 <DialogTitle>Remove Student</DialogTitle>
                 <DialogDescription/>
                 <div>
-                    <p>Are you sure?</p>
-                    <div>
-                        <DialogClose >Cancel</DialogClose>
-                        <DialogClose onClick={handleRemoveStudent}  className="bg-red-500 text-white">Yes</DialogClose>
+                    <p className="text-lg">Are you sure?</p>
+                    <div className="flex justify-end gap-2">
+                        <DialogClose className="px-4 py-2 text-gray-500 cursor-pointer">Cancel</DialogClose>
+                        <DialogClose onClick={handleRemoveStudent}  className="bg-red-500 duration-200 hover:bg-red-700 text-white px-4 py-2 cursor-pointer rounded-lg">Yes</DialogClose>
                     </div>
                 </div>
             </DialogContent>

@@ -7,7 +7,7 @@ const ManageStudentsPage = async() => {
   return (
     <div className="py-12 px-4">
       <h1 className="md:text-[4vw] font-extralight text-[7vw] text-center">
-        Classrooms
+        Manage Students
       </h1>
       <ClassList classrooms={classes}/>
     </div>
