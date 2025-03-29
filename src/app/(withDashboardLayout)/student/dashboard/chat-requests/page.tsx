@@ -2,6 +2,7 @@ import { DataTable } from "@/components/dashboard/attendanceStats/data-table"
 import { studentRequestColumns } from "@/components/dashboard/chatRequest/studentRequestCol"
 
 import { getMyChatRequests } from "@/services/Chat/intex"
+export const dynamic = "force-dynamic"
 
 const ChatRequestsPage = async() => {
     const {data:requests} = await getMyChatRequests()

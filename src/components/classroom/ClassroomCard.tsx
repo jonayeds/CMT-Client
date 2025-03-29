@@ -46,7 +46,7 @@ const ClassroomCard = ({ classroom }: { classroom: IClassroom }) => {
     >
       <div className="bg-gradient-to-tl from-gray-300 to-gray-500 text-white w-full p-4">
         <div className="flex justify-between items-center text-white">
-          <h1 className="text-2xl ">{classroom.courseTitle}</h1>
+          <h1 className="text-2xl truncate">{classroom.courseTitle}</h1>
           <DropdownMenu >
             <DropdownMenuTrigger className="outline-none cursor-pointer">
               <EllipsisVertical className="hover:scale-125 duration-300 w-8 h-8 rounded-full p-1" />

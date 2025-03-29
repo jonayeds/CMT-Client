@@ -1,9 +1,11 @@
 import ClassList from "@/components/dashboard/manageStudents/ClassList"
 import { getMyClasses } from "@/services/Classroom"
 
+export const dynamic = "force-dynamic"
+
 const ManageStudentsPage = async() => {
   const {data:classes} = await getMyClasses()
-  
+
 
   return (
     <div className="py-12 px-4">
@@ -14,5 +16,7 @@ const ManageStudentsPage = async() => {
     </div>
   )
 }
+
+
 
 export default ManageStudentsPage

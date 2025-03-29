@@ -7,7 +7,7 @@ import {  ChevronLeft, Dot, NotebookIcon } from "lucide-react"
 import moment from "moment"
 import Link from "next/link"
 
-const ContentDetailsPage = async({params}:{params:{contentId:string, classroomId:string}}) => {
+const ContentDetailsPage = async({params}:{params:Promise<{classroomId:string, contentId:string}>}) => {
     const {contentId,classroomId} = await params
     const {data:content}:{data:IContent}  = await getASingleContent(contentId)
     const {data:classroom}:{data:IClassroom} = await getASingleClassroom(classroomId)

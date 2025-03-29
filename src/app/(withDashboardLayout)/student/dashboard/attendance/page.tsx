@@ -3,6 +3,8 @@ import { DataTable } from "../../../../../components/dashboard/attendanceStats/d
 import { columns } from "../../../../../components/dashboard/attendanceStats/columns"
 import { IAttendance } from "@/types/attendance"
 
+export const dynamic = "force-dynamic"
+
 const AttendanceDashboardPage = async() => {
   const {data:classrooms} = await getMyAttendances()
   const tableData = classrooms?.map((classroom:IAttendance) => ({

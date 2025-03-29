@@ -8,11 +8,7 @@ import { getUserFromCookies } from "@/services/AuthService";
 import { getASingleClassroom, getClassStudents } from "@/services/Classroom";
 import { IJwtDecodedUser } from "@/types/user";
 
-const ClassroomDetailPage = async ({
-  params,
-}: {
-  params: { classroomId: string };
-}) => {
+const ClassroomDetailPage = async ({params}:{params:Promise<{classroomId:string}>}) => {
   const { classroomId } = await params;
   const user = await getUserFromCookies();
   const role = user?.role;

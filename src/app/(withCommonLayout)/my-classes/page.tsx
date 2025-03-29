@@ -2,6 +2,8 @@ import ClassroomCard from "@/components/classroom/ClassroomCard"
 import { getMyClasses } from "@/services/Classroom"
 import { IClassroom } from "@/types/classroom"
 
+export const dynamic = "force-dynamic"
+
 const MyClassesPage = async() => {
     const myClasses = await getMyClasses()
   return (
