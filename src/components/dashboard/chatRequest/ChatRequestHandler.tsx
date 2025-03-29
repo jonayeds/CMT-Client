@@ -2,7 +2,7 @@
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { format } from "date-fns"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -12,12 +12,35 @@ import { Calendar } from "@/components/ui/calendar";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ClassMinutes } from "@/constants/classroom";
+import { ClassHours, ClassMinutes } from "@/constants/classroom";
 
 const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
-    const form = useForm()
-    const onSubmit = (data)=>{
+    const now  = new Date()
+    const form = useForm({
+        defaultValues:{
+            date:now,
+            hour:undefined,
+            minute:undefined
+        },
+
+    })
+    const {date,hour} = form.watch()
+    const onSubmit:SubmitHandler<FieldValues> = (data)=>{
         console.log(data)
+    }
+    const handleDisableHour = (hour:string):boolean=>{
+        if(date && date.getDate()=== now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()){
+            return Number(hour)<now.getHours()
+        }
+        return false
+    }
+    const handleDisableMinute = (minute:string)=>{
+        const today = new Date()
+        today.setHours(0,0,0,0)
+        if(Number(hour)=== now.getHours() && date===today){
+           return Number(minute)<now.getMinutes()
+        }
+        return false
     }
   return (
       <div className="flex items-center justify-center gap-2">
@@ -59,7 +82,12 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
                                 className=""
                                 selected={field.value}
                                 onSelect={field.onChange}
-                                disabled={(date)=> date < new Date()}
+                                initialFocus
+                                disabled={(date)=> {
+                                    const today = new Date()
+                                    today.setHours(0,0,0,0)
+                                    return date<today
+                                } }
                                 mode="single"
                                 />
                                 </PopoverClose>
@@ -75,7 +103,7 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
             name={`hour`}
             render={({ field }) => (
                 <FormItem className="w-full">
-                <FormLabel>Hour</FormLabel>
+                <FormLabel></FormLabel>
 
                 <FormControl>
                   <Select
@@ -85,14 +113,14 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
                     >
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={`Minute`} />
+                        <SelectValue placeholder={`Hour`} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-white border border-gray-200">
                       <ScrollArea className="h-[20vh]">
-                        {ClassMinutes.map((minute, idx) => (
-                            <SelectItem key={idx} value={minute} >
-                            {minute}
+                        {ClassHours.map((hour, idx) => (
+                            <SelectItem disabled={handleDisableHour(hour)} key={idx} value={hour} >
+                            {hour}
                           </SelectItem>
                         ))}
                       </ScrollArea>
@@ -107,13 +135,14 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
             name={`minute`}
             render={({ field }) => (
                 <FormItem className="w-full">
-                <FormLabel>Minute</FormLabel>
+                <FormLabel></FormLabel>
 
                 <FormControl>
                   <Select
                     {...field}
                     value={field.value}
                     onValueChange={field.onChange}
+                    disabled={!hour ? true:false}
                     >
                     <FormControl>
                       <SelectTrigger className="w-full">
@@ -123,7 +152,9 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
                     <SelectContent className="bg-white border border-gray-200">
                       <ScrollArea className="h-[20vh]">
                         {ClassMinutes.map((minute, idx) => (
-                            <SelectItem key={idx} value={minute} >
+                            <SelectItem
+                            disabled={handleDisableMinute(minute)}
+                            key={idx} value={minute} >
                             {minute}
                           </SelectItem>
                         ))}

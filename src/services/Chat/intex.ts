@@ -16,3 +16,7 @@ export const getMyChatRequests = async()=>{
         console.log(error)
     }
 }
+
+export const acceptChatRequest = async()=>{
+
+}
