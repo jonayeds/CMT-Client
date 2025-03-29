@@ -45,7 +45,7 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
     }
 
     const handleRejectRequest = async()=>{
-        const result = await handleChatRequest({status:"rejected"})
+        const result = await handleChatRequest({status:"rejected",chatId})
         if(result?.success){
             toast.success(result?.message)
         }else{
@@ -59,9 +59,7 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
         return false
     }
     const handleDisableMinute = (minute:string)=>{
-        const today = new Date()
-        today.setHours(0,0,0,0)
-        if(Number(hour)=== now.getHours() && date===today){
+        if(Number(hour)=== now.getHours() && date.getDate()=== now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()){
            return Number(minute)<now.getMinutes()
         }
         return false

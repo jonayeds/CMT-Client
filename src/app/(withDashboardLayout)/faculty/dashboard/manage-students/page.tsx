@@ -3,6 +3,7 @@ import { getMyClasses } from "@/services/Classroom"
 
 const ManageStudentsPage = async() => {
   const {data:classes} = await getMyClasses()
+  
 
   return (
     <div className="py-12 px-4">

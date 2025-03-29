@@ -1,4 +1,5 @@
 "use server"
+import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 import { FieldValues } from "react-hook-form"
 
@@ -9,8 +10,12 @@ export const getMyChatRequests = async()=>{
             method:"GET",
             headers:{
                 Authorization:token as string,
+            },
+            next:{
+                tags:["chatRequest"]
             }
         })
+        
         const data = await result.json()
         return data
 
@@ -20,7 +25,6 @@ export const getMyChatRequests = async()=>{
 }
 
 export const handleChatRequest = async(payload:FieldValues)=>{
-    console.log(payload)
     try {
         const token = (await cookies()).get("accessToken")?.value
         const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chat/handle-chat-request`,{
@@ -31,6 +35,7 @@ export const handleChatRequest = async(payload:FieldValues)=>{
             },
             body:JSON.stringify(payload)
         })
+        revalidateTag("chatRequest")
         const data = await result.json()
         return data
 
@@ -38,3 +43,24 @@ export const handleChatRequest = async(payload:FieldValues)=>{
         console.log(error)
     }
 }
+
+
+export const sendChatrequest = async(classroomId:string)=>{
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chat/send-chat-request/${classroomId}`,{
+            method:"POST",
+            headers:{
+                Authorization:token as string,
+            },
+        })
+
+        const data = await result.json()
+        return data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
