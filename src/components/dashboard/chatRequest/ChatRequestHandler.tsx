@@ -13,6 +13,8 @@ import { PopoverClose } from "@radix-ui/react-popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ClassHours, ClassMinutes } from "@/constants/classroom";
+import { handleChatRequest } from "@/services/Chat/intex";
+import { toast } from "sonner";
 
 const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
     const now  = new Date()
@@ -25,8 +27,30 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
 
     })
     const {date,hour} = form.watch()
-    const onSubmit:SubmitHandler<FieldValues> = (data)=>{
-        console.log(data)
+    const onSubmit:SubmitHandler<FieldValues> = async(data)=>{
+        const schedule = data.date
+        schedule.setHours(Number(data.hour), Number(data.minute),0,0)
+        const payload = {
+            schedule,
+            status:"accepted",
+            chatId
+        }
+        const result = await handleChatRequest(payload)
+        if(result?.success){
+            toast.success(result?.message)
+        }else{
+            toast.error(result?.message)
+        }
+
+    }
+
+    const handleRejectRequest = async()=>{
+        const result = await handleChatRequest({status:"rejected"})
+        if(result?.success){
+            toast.success(result?.message)
+        }else{
+            toast.error(result?.message)
+        }
     }
     const handleDisableHour = (hour:string):boolean=>{
         if(date && date.getDate()=== now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()){
@@ -180,7 +204,7 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
 
         </DialogContent>
       </Dialog>
-    <div className="bg-red-500 cursor-pointer text-white p-1 rounded-full text-2xl rotate-45"><GoPlus/></div>
+    <div className="bg-red-500 cursor-pointer text-white p-1 rounded-full text-2xl rotate-45" onClick={handleRejectRequest}><GoPlus/></div>
     </div>
   );
 };
