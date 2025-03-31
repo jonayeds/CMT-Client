@@ -7,7 +7,8 @@ import { PiChalkboardTeacherFill } from "react-icons/pi";
 import { IoIosTime } from "react-icons/io";
 import NavigationLink from "./NavigationLink";
 import { RiMenuFold2Fill } from "react-icons/ri";
-import { TbCirclePlus2 } from "react-icons/tb";
+import { IoIosChatbubbles } from "react-icons/io";
+import { RiChatAiFill } from "react-icons/ri";
 import {
   Drawer,
   DrawerContent,
@@ -119,19 +120,33 @@ const Sidebar = ({
         )}
         {user?.role === "faculty" ? (
           <NavigationLink
-          Icon={TbCirclePlus2}
+          Icon={RiChatAiFill}
           text="Chat Requests"
           href={"/faculty/dashboard/chat-requests"}
           isActive={path === "chat-requests"}
           />
         ) : (
           <NavigationLink
-          Icon={TbCirclePlus2}
+          Icon={RiChatAiFill}
           text="Chat Requests"
           href={"/student/dashboard/chat-requests"}
           isActive={path === "chat-requests"}
           />
         ) }
+        {
+          user?.role ==="faculty"? <NavigationLink
+          Icon={IoIosChatbubbles}
+          text="My Chats"
+          href={"/faculty/dashboard/chats"}
+          isActive={path === "chats"}
+          />: <NavigationLink
+          Icon={IoIosChatbubbles}
+          text="My Chats"
+          href={"/student/dashboard/chats"}
+          isActive={path === "chats"}
+          />
+        }
+        
         </div>
         <NavigationLink
         Icon={()=>Profile({image:user!.profileImage})}

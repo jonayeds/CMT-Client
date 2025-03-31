@@ -80,4 +80,18 @@ export const cancelChatrequest = async(chatId:string)=>{
     }
 }
 
-
+export const getMyChats = async()=>{
+    try {
+        const token = (await cookies()).get("accessToken")?.value
+        const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/chat/my-chats`,{
+            method:"GET",
+            headers:{
+                Authorization:token as string,
+            },
+        })
+        const data = await result.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
