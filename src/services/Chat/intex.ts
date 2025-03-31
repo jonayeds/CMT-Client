@@ -95,3 +95,16 @@ export const getMyChats = async()=>{
         console.log(error)
     }
 }
+
+export const getChatMessages = async(chatId:string)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/message/${chatId}`,{
+        method:"GET",
+        headers:{
+            Authorization:token as string
+        }
+    })
+    const res = await result.json()
+    return res
+
+}

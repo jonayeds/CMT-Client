@@ -1,8 +1,9 @@
-import LoadingSpinner from "@/components/shared/LoadingSpinner"
+
+import { Loader2 } from "lucide-react"
 
 const MessagesLoading = () => {
   return (
-    <div><LoadingSpinner/></div>
+    <div className="h-[calc(100vh-302px)] flex justify-center items-center w-full "><Loader2 className="animate-spin duration-100"/></div>
   )
 }
 

@@ -19,3 +19,10 @@ export interface IChatStudent{
     schedule:string;
     faculty:IUser
 }
+
+export interface IMessage {
+    _id:string;
+    from:"student"| "faculty";
+    message:string;
+    chat:string;
+}
