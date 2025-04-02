@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@/context/UserContext";
 import { IChat } from "@/types/chat";
+import { IUser } from "@/types/user";
 import { Loader2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -44,40 +45,55 @@ const ChatNavigation = ({ chats }: { chats: IChat[] }) => {
       <div
         className={`grid grid-cols-1 border border-gray-200  divide-gray-200 divide-y  rounded-lg overflow-hidden    max-h-[calc(100vh-302px)] overflow-y-auto `}
       >
-        {search.map((chat) => (
-          <Link
-            href={`${
-              isMobile
-                ? `/${user?.role}/dashboard/messages/${chat._id}`
-                : `/${user?.role}/dashboard/chats/${chat._id}`
-            } `}
-            className={`py-2  px-3 ${
-              path[4] === chat._id ? "bg-gray-200" : "hover:bg-gray-50"
-            }  `}
-            key={chat._id}
-          >
-            <div className="flex items-center gap-2 ">
-              <Avatar className="bg-white border-green-500 border size-10">
-                <AvatarImage src={chat.student.profileImage} />
-                <AvatarFallback>{chat.student.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className=" md:max-w-[15vw] max-w-[80vw] truncate">
-                <p className="text-lg leading-6 truncate">
-                  {chat.student.name}
-                </p>
-                <p className="text-sm text-gray-500 mt-1 truncate">
-                  {chat.classroom.courseTitle}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {chat.classroom.courseCode}
-                </p>
-              </div>
-            </div>
-          </Link>
+        {search.map((chat) => (<ChatNavigationCard chat={chat} user={user} isMobile={isMobile} path={path}  key={chat._id} />
         ))}
       </div>
     </div>
   );
 };
+
+
+const ChatNavigationCard =({chat, user, isMobile, path}:{chat:IChat, user:IUser |null, isMobile:boolean, path:string[]})=>{
+
+  return (
+    <Link
+    href={`${
+      isMobile
+        ? `/${user?.role}/dashboard/messages/${chat._id}`
+        : `/${user?.role}/dashboard/chats/${chat._id}`
+    } `}
+    className={`py-2  px-3 ${
+      path[4] === chat._id ? "bg-gray-200" : "hover:bg-gray-50"
+    }  `}
+  >
+    <div className="flex items-center gap-2 ">
+      {
+        user?.role === "student" ? <Avatar className="bg-white border-green-500 border size-10">
+        <AvatarImage src={chat.classroom.faculty.profileImage} />
+        <AvatarFallback>{chat.classroom.faculty.name.charAt(0)}</AvatarFallback>
+      </Avatar> : <Avatar className="bg-white border-green-500 border size-10">
+        <AvatarImage src={chat.student.profileImage} />
+        <AvatarFallback>{chat.student.name.charAt(0)}</AvatarFallback>
+      </Avatar>
+      }
+      
+
+      <div className=" md:max-w-[15vw] max-w-[80vw] truncate">
+        <p className="text-lg leading-6 truncate">
+          {user?.role ==="faculty" ? chat.student.name : chat.classroom.faculty.name}
+        </p>
+        <p className="text-sm text-gray-500 mt-1 truncate">
+          {chat.classroom.courseTitle}
+        </p>
+        <p className="text-xs text-gray-500 mt-1">
+          {chat.classroom.courseCode}
+        </p>
+      </div>
+    </div>
+
+  </Link>
+  )
+}
+
 
 export default ChatNavigation;
