@@ -1,7 +1,9 @@
 "use server"
+import { IMessage } from "@/types/chat"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 import { FieldValues } from "react-hook-form"
+import { io } from "socket.io-client"
 
 export const getMyChatRequests = async()=>{
     try {
@@ -107,4 +109,14 @@ export const getChatMessages = async(chatId:string)=>{
     const res = await result.json()
     return res
 
+}
+export const sendMessageToUser = async( message:Pick<IMessage, "chat"| "from"| "message">)=>{
+    const token = (await cookies()).get("accessToken")?.value
+    const socket = io('http://localhost:8000', {
+      withCredentials: true,
+      extraHeaders:{
+          Authorization:token as string
+      }
+    })
+    socket.emit('newMessage', message)
 }

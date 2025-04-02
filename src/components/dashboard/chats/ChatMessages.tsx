@@ -5,21 +5,25 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@/context/UserContext"
 import { IMessage } from "@/types/chat"
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitErrorHandler, useForm } from "react-hook-form";
 import { BsFillSendFill } from "react-icons/bs";
 import {io} from 'socket.io-client'
+import MessagesViewer from "./MessagesViewer";
 
 
 
 
 const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) => {
   const socket = io('http://localhost:8000')
-  const {user} = useUser()
+  const {user,isLoading} = useUser()
   const form = useForm()
   const [msgs, setMsgs] = useState(messages)
 
+
   useEffect(()=>{
+    
 
     socket.on("connect",()=>{
       console.log("client connected", socket.id)
@@ -27,22 +31,24 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
     socket.emit("join-chat", chatId)
    socket.on('receiveMessage', (msg)=>{
     console.log("Message received")
-      setMsgs((prev)=> [...prev, msg])
+    console.log(msg, msg.from , user?.role)
+
+    if(msg.from !== user?.role){
+      setMsgs((prev)=> [msg ,...prev])
+    }
    })
    socket.emit("joinRoom", chatId )
    return ()=>{
     socket.off('receiveMessage')
    }
-  },[])
+  },[user])
 
-
-    const sendMessage : SubmitErrorHandler<FieldValues>= (data)=>{
-      console.log(data)
-      socket.emit('newMessage', {
-        from:user?.role,
-        chat:chatId,
-        message:data.message
-      })
+    const sendMessage : SubmitErrorHandler<FieldValues>= async(data)=>{
+      if(!data?.message){
+        return 
+      }
+      socket.emit('newMessage', {chat:chatId, message:data.message, from:user?.role})
+      setMsgs((prev)=> [ {chat:chatId, message:data.message, from:user?.role} as unknown as IMessage, ...prev])
         form.reset()
     }
     const handleKeyDown =(e:any)=>{
@@ -52,19 +58,15 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
         }
 
     }
+    if(isLoading){
+      return <div className="h-[calc(100vh-250px)] w-full flex justify-center items-center"><Loader2 className="animate-spin duration-200 "/></div>
+    }
   return (
-    <div className="px-4  max-w-3xl mx-auto">
-        <div>
+    <div className="px-4 overflow-y-auto   max-w-3xl mx-auto">
 
-        {
-            msgs.map((message,idx)=>(
-                <div key={idx} className={ `flex mt-3 w-full ${message.from === user?.role ? 'justify-end  text-white ': 'justify-start  text-gray-700'}`}>
+       <MessagesViewer msgs={msgs} user={user}/>
 
-                <p className={ `px-4 py-1  w-max ${message.from === user?.role ? '  text-white bg-green-600 rounded-l-full rounded-tr-full': ' bg-gray-200 rounded-r-full rounded-tl-full text-gray-700'}`}>{message.message}</p>
-                </div>
-            ))
-        }
-        </div>
+
         <Form {...form}>
 
         <form onSubmit={form.handleSubmit(sendMessage)} className="mb-4 mt-2  pt-4 flex gap-4 border-t border-gray-200 items-center" >

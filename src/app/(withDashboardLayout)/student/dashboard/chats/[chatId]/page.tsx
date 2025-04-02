@@ -9,7 +9,7 @@ const ChatMessagesPage = async({params}:{params:Promise<{chatId:string}>}) => {
   const {data:messages} = await getChatMessages(chatId) 
 
   return (
-    <div className='w-full'>
+    <div className='w-full overflow-y-auto'>
       <ChatMessages messages={messages} chatId={chatId} />
     </div>
   )

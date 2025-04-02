@@ -14,7 +14,7 @@ const ChatLayout = async({children}:{children:React.ReactNode}) => {
           
             <ChatNavigation chats={chats} />
         </div>
-        <div className=" md:flex border-gray-300 border rounded-lg flex-1 h-[calc(100vh-250px)] overflow-y-auto hidden  items-end ">
+        <div className=" md:flex border-gray-300 border rounded-lg flex-1 h-[calc(100vh-250px)]  overflow-y-auto hidden  items-end ">
         {children}
         </div>
     </div>
