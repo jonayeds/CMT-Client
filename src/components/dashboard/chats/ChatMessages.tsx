@@ -24,6 +24,7 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
     socket.on("connect",()=>{
       console.log("client connected", socket.id)
     })
+    socket.emit("join-chat", chatId)
    socket.on('receiveMessage', (msg)=>{
     console.log("Message received")
       setMsgs((prev)=> [...prev, msg])
