@@ -6,11 +6,15 @@ export const dynamic = "force-dynamic"
 
 const ChatMessagesPage = async({params}:{params:Promise<{chatId:string}>}) => {
   const {chatId} = await params
-  const {data:messages} = await getChatMessages(chatId) 
+  const data = await getChatMessages(chatId) 
+  const messages = data?.data
 
   return (
     <div className='w-full overflow-y-auto'>
-      <ChatMessages messages={messages} chatId={chatId} />
+      {
+        messages ? <ChatMessages messages={messages} chatId={chatId} /> : <div>Chat not found</div>
+      }
+      
     </div>
   )
 }

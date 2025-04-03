@@ -32,9 +32,7 @@ export const uploadContentToDropbox: any = async (files: File[]) => {
       );
 
       if (!response.ok) {
-        console.log("from line 34 --> ",response);
         if (response.statusText === "Unauthorized") {
-          console.log("hit Unauthorized");
           await refreshDropboxAccessToken(
             process.env.DROPBOX_REFRESH_TOKEN as string
           );
@@ -57,7 +55,6 @@ export const uploadContentToDropbox: any = async (files: File[]) => {
 };
 
 export const getDropBoxPublicUrl:any = async (filePath: string) => {
-    console.log(filePath ,"  <-- from 59 ")
   const accessToken = (await cookies()).get("dropboxAccessToken")?.value
   const res = await fetch(
     `https://api.dropboxapi.com/2/sharing/list_shared_links`,
@@ -72,7 +69,6 @@ export const getDropBoxPublicUrl:any = async (filePath: string) => {
       })
     }
   );
-  console.log("from line 71 --> ", res)
   if(!res.ok && res.status === 401){
     await refreshDropboxAccessToken(process.env.DROPBOX_REFRESH_TOKEN as string)
     return getDropBoxPublicUrl(filePath)
@@ -99,7 +95,6 @@ export const getDropBoxPublicUrl:any = async (filePath: string) => {
 
 
   if (!response.ok) {
-    console.log(response)
     const errorText = await response.text();
     throw new Error(`Dropbox API Error: ${errorText}`);
   }
@@ -131,7 +126,6 @@ export const refreshDropboxAccessToken = async (refreshToken: string) => {
   }
 
   const data = await response.json();
-  console.log("Line no: 133  --> ",data.access_token);
   (await cookies()).set("dropboxAccessToken", data.access_token);
 };
 

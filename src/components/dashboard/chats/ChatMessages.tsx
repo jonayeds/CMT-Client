@@ -24,23 +24,24 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
 
   useEffect(()=>{
     
+    if(user){
 
-    socket.on("connect",()=>{
-      console.log("client connected", socket.id)
-    })
-    socket.emit("join-chat", chatId)
-   socket.on('receiveMessage', (msg)=>{
-    console.log("Message received")
-    console.log(msg, msg.from , user?.role)
-
-    if(msg.from !== user?.role){
-      setMsgs((prev)=> [msg ,...prev])
+      socket.on("connect",()=>{
+        console.log("client connected", socket.id)
+      })
+      socket.emit("join-chat", chatId)
+      socket.on('receiveMessage', (msg)=>{
+        console.log("Message received")
+        
+        if(msg.from !== user?.role){
+          setMsgs((prev)=> [msg ,...prev])
+        }
+      })
+      socket.emit("joinRoom", chatId )
+      return ()=>{
+        socket.off('receiveMessage')
+      }
     }
-   })
-   socket.emit("joinRoom", chatId )
-   return ()=>{
-    socket.off('receiveMessage')
-   }
   },[user])
 
     const sendMessage : SubmitErrorHandler<FieldValues>= async(data)=>{

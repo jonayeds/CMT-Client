@@ -4,7 +4,8 @@ import { getMyChats } from "@/services/Chat/intex"
 export const dynamic = "force-dynamic"
 
 const ChatLayout = async({children}:{children:React.ReactNode}) => {
-    const {data:chats} = await getMyChats()
+    const data = await getMyChats()
+    const chats = data.data
   return (
     <div className="px-4 py-12">
 

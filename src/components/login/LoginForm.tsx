@@ -18,7 +18,6 @@ const LoginForm = () => {
     const router = useRouter()
     const {setUser} = useUser()
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data)
       setLoading(true);
       const result = await loginUser(data)
           if(result?.success){

@@ -3,7 +3,7 @@
 import { useUser } from "@/context/UserContext";
 import moment from "moment";
 import { HiPresentationChartLine } from "react-icons/hi2";
-import { PiChalkboardTeacherFill } from "react-icons/pi";
+// import { PiChalkboardTeacherFill } from "react-icons/pi";
 import { IoIosTime } from "react-icons/io";
 import NavigationLink from "./NavigationLink";
 import { RiMenuFold2Fill } from "react-icons/ri";
@@ -100,7 +100,7 @@ const Sidebar = ({
           text="Class Schedule"
           isActive={path === "my-routine"}  
           />
-        <NavigationLink
+        {/* <NavigationLink
           Icon={PiChalkboardTeacherFill}
           text="Manage Classes"
           href={
@@ -109,7 +109,7 @@ const Sidebar = ({
             : "/faculty/dashboard/manage-classes"
           }
             isActive={path === "manage-classes"}
-          />
+          /> */}
         {user?.role === "faculty" && (
           <NavigationLink
           Icon={PiStudentFill}

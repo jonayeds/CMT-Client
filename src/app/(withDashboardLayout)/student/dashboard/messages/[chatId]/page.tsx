@@ -6,10 +6,13 @@ export const dynamic = "force-dynamic"
 
 const ChatMessagesPage = async({params}:{params:Promise<{chatId:string}>}) => {
   const {chatId} = await params
-    const {data:messages} = await getChatMessages(chatId) 
+    const data = await getChatMessages(chatId) 
+    const messages = data?.data
   return (
     <div >
-      <ChatMessages messages={messages} chatId={chatId}  />
+      {
+        messages ? <ChatMessages messages={messages} chatId={chatId} /> : <div className='w-full h-[calc(100vh-250px)] flex items-center justify-center'>Chat not found</div>
+      }
     </div>
   )
 }

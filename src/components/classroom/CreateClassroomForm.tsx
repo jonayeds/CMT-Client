@@ -34,9 +34,7 @@ const CreateClassroomForm = () => {
       data.classDays = data.classDays.filter((day:string) => day !== "")
       data.startTime = data.startTime.hour + ":" + data.startTime.minute
       data.endTime = data.endTime.hour + ":" + data.endTime.minute
-      console.log(data);
     const result = await createClassroom(data);
-    console.log(result)
     if (result?.success) {
       toast.success(result?.message, {duration: 3000});
       router.push("/");

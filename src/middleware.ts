@@ -34,7 +34,6 @@ export const middleware = async (request: NextRequest) => {
     /^\/my-classes\/([a-fA-F0-9]+)\/attendance-qr-code$/
   );
   if (isQRCodeGenerator && user?.role === "faculty") {
-    console.log("hit here");
     return NextResponse.next();
   }
   if (match && user) {

@@ -29,16 +29,13 @@ const UploadContentForm = ({ classroomId }: { classroomId: string }) => {
     data.contentLinks = links;
     setLoading(true);
     const { fileUrls } = await uploadContentToDropbox(files);
-    console.log(fileUrls);
     data.contentFiles = fileUrls;
     data.classroom = classroomId;
-    console.log(data.contentFiles);
     if (files.length>0 && data.contentFiles?.length === 0) {
       toast.error("File was not uploaded to cloud!!");
       return;
     }
     const result = await uploadClassroomContent(data);
-    console.log(result);
     if (result?.success) {
       toast.success(result?.message);
     } else {
