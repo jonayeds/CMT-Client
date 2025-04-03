@@ -81,7 +81,7 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
                       placeholder="Type here..."
                       {...field}
                       value={field.value || ""}
-                      className="border max-h-1 h-1 border-gray-200 
+                      className="border md:ax-h-1 md:h-1 h-0.5 max-h-0.5 border-gray-200 
                       "
                     />
                   </FormControl>

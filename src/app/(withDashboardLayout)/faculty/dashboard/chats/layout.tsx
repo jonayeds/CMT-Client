@@ -14,7 +14,7 @@ const ChatLayout = async({children}:{children:React.ReactNode}) => {
           
             <ChatNavigation chats={chats} />
         </div>
-        <div className="  border-gray-300 border rounded-lg w-full ">
+        <div className=" md:block hidden border-gray-300 border rounded-lg w-full ">
         {children}
         </div>
     </div>

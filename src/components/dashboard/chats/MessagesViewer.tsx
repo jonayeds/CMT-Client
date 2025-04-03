@@ -11,19 +11,21 @@ const MessagesViewer = ({msgs, user}:{msgs:IMessage[], user:IUser | null}) => {
       },[msgs])
       console.log(msgs)
   return (
-    <div  ref={scrollRef} className= "  h-[calc(100vh-355px)] overflow-y-auto scrollbar-hidden">
-      {/* <div className="absolute w-full h-[20%] bg-white top-0 left0"></div> */}
-    <div className=" flex flex-col-reverse ">
+    <div  ref={scrollRef} className= "  md:h-[calc(100vh-355px)] h-[calc(100vh-200px)]  overflow-y-auto scrollbar-hidden">
+      <div className="flex flex-col justify-end min-h-full ">
+
+    <div className=" flex flex-col-reverse  ">
 
     {
-        msgs.map((message,idx)=>(
-            <div key={idx} className={ `flex overflow-scroll mt-3 w-full ${message.from === user?.role ? 'justify-end  text-white ': 'justify-start  text-gray-700'}`}>
+      msgs.map((message,idx)=>(
+        <div key={idx} className={ `flex overflow-scroll mt-3 w-full ${message.from === user?.role ? 'justify-end  text-white ': 'justify-start  text-gray-700'}`}>
 
             <p className={ `px-4 py-1  w-max ${message.from === user?.role ? '  text-white bg-green-600 rounded-l-full rounded-tr-full': ' bg-gray-200 rounded-r-full rounded-tl-full text-gray-700'}`}>{message.message}</p>
             </div>
         ))
-    }
+      }
     </div>
+      </div>
     </div>
   )
 }
