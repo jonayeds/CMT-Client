@@ -62,8 +62,8 @@ const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) =>
       return <div className="h-[calc(100vh-250px)] w-full flex justify-center items-center"><Loader2 className="animate-spin duration-200 "/></div>
     }
   return (
-    <div className="px-4 overflow-y-auto   max-w-3xl mx-auto">
-
+    <div className="px-4 relative overflow-y-auto   max-w-3xl mx-auto ">
+      <div className="absolute w-full  h-[50vh] pointer-events-none  bg-gradient-to-b via-transparent from-white to-transparent z-10 top-0 left-[0] rounded-lg"></div>
        <MessagesViewer msgs={msgs} user={user}/>
 
 

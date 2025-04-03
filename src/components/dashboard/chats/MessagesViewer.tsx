@@ -11,8 +11,8 @@ const MessagesViewer = ({msgs, user}:{msgs:IMessage[], user:IUser | null}) => {
       },[msgs])
       console.log(msgs)
   return (
-    <div  ref={scrollRef} className=" h-[calc(100vh-355px)] overflow-y-auto">
-
+    <div  ref={scrollRef} className= "  h-[calc(100vh-355px)] overflow-y-auto scrollbar-hidden">
+      {/* <div className="absolute w-full h-[20%] bg-white top-0 left0"></div> */}
     <div className=" flex flex-col-reverse ">
 
     {
