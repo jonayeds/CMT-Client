@@ -10,13 +10,15 @@ export const uploadImage = async(image:string)=>{
         const result = await cloudinary.uploader.upload(image, {
             resource_type: "auto",
         })
-        const autoCropUrl = cloudinary.url(result.public_id, {
-            crop: 'auto',
-            gravity: 'face:center',
-            width: 500,
-            height: 500,
-        });
-        return autoCropUrl
+        // console.log(result)
+        return result.url
+        // const autoCropUrl = cloudinary.url(result.public_id, {
+        //     crop: 'auto',
+        //     gravity: 'face:center',
+        //     width: 500,
+        //     height: 500,
+        // });
+        // return autoCropUrl
     } catch (error) {
         console.log(error)
     }

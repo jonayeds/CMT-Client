@@ -112,7 +112,7 @@ export const getChatMessages = async(chatId:string)=>{
 }
 export const sendMessageToUser = async( message:Pick<IMessage, "chat"| "from"| "message">)=>{
     const token = (await cookies()).get("accessToken")?.value
-    const socket = io('http://localhost:8000', {
+    const socket = io('https://cmt-server-production.up.railway.app', {
       withCredentials: true,
       extraHeaders:{
           Authorization:token as string

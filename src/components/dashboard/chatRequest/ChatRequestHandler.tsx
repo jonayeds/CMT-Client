@@ -24,7 +24,6 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
             hour:undefined,
             minute:undefined
         },
-
     })
     const {date,hour} = form.watch()
     const onSubmit:SubmitHandler<FieldValues> = async(data)=>{
@@ -60,7 +59,7 @@ const ChatRequestHandler = ({ chatId }: { chatId: string }) => {
     }
     const handleDisableMinute = (minute:string)=>{
         if(Number(hour)=== now.getHours() && date.getDate()=== now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()){
-           return Number(minute)<now.getMinutes()
+           return Number(minute)<=now.getMinutes()
         }
         return false
     }

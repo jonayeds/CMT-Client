@@ -37,6 +37,7 @@ const RegisterForm = () => {
       const imageUrl = await uploadImage(image);
       data.profileImage = imageUrl;
     }
+    console.log(data.profileImage)
     const result = await registerUser(data);
     if (result?.success) {
       toast.success(result.message);

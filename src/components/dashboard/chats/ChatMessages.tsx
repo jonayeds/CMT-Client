@@ -16,7 +16,7 @@ import MessagesViewer from "./MessagesViewer";
 
 
 const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) => {
-  const socket = io('http://localhost:8000')
+  const socket = io('https://cmt-server-production.up.railway.app')
   const {user,isLoading} = useUser()
   const form = useForm()
   const [msgs, setMsgs] = useState(messages)
