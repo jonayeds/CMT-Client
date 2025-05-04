@@ -6,10 +6,11 @@ import { IClassroom } from "@/types/classroom"
 import { isTimeBeetween } from "@/utils/classroom";
 import {  Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Dot } from "lucide-react";
-import moment from "moment";
+import moment from 'moment-timezone';
 import { toast } from "sonner";
 const MarkAttendance = ({classroom}:{classroom:IClassroom}) => {
-  const today = moment().format("dddd")
+    const localTime = moment().tz('Asia/Dhaka');
+    const today = localTime.format('dddd');
   const isBetweenClassTime = isTimeBeetween(classroom.startTime,classroom.endTime)
   const isClassDay = classroom.classDays.includes(today)
   const startScanner = async()=>{

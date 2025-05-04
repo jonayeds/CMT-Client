@@ -1,7 +1,8 @@
-import moment from "moment";
+import moment from 'moment-timezone';
 
 export const isTimeBeetween = (startTime:string, endTime:string)=>{
-    const now = moment().format("HH:mm")
+const localTime = moment().tz('Asia/Dhaka');
+  const now = localTime.format("HH:mm");
       const currentTime = now.split(":").map(t=>Number(t))
       const currentTimeInMinutes = currentTime[0] * 60 + currentTime[1]
       const startTimeNumber= startTime.split(":").map(t=>Number(t))

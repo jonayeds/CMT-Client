@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 const Routine = ({ classes }: { classes: IClassroom[] }) => {
   const today = moment().format("dddd")
+  console.log(today)
   const sortClassTime =(a:IClassroom,b:IClassroom)=>{
     const aStartTime = a.startTime.split(":")
     const aStartMinutes = Number(aStartTime[0]) * 60 + Number(aStartTime[1])
