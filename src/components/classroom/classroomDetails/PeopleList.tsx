@@ -39,9 +39,9 @@ const PeopleList = ({students, faculty, currentUser}:{students:IAttendance[], fa
                     <span className="bg-green-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Present: {attendance.present}</span>
                     <span className="bg-green-100 px-2 py-1 text-[2vw] rounded-lg md:hidden flex text-gray-600">P... {attendance.present}</span>
                     <span className="bg-red-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Absent: {attendance.absent}</span>
-                    <span className="bg-red-100 px-2 py-1 text-[2vw] rounded-lg md:hidden flex text-gray-600">A... {attendance.present}</span>
+                    <span className="bg-red-100 px-2 py-1 text-[2vw] rounded-lg md:hidden flex text-gray-600">A... {attendance.absent}</span>
                     <span className="bg-yellow-100 px-2 py-1 text-xs rounded-lg md:flex hidden text-gray-600">Late: {attendance.late}</span>
-                    <span className="bg-yellow-100 px-2 py-1  rounded-lg text-[2vw] md:hidden flex text-gray-600">L... {attendance.present}</span>
+                    <span className="bg-yellow-100 px-2 py-1  rounded-lg text-[2vw] md:hidden flex text-gray-600">L... {attendance.late}</span>
                 </div>
             </div>)
         }

@@ -34,7 +34,7 @@ const Routine = ({ classes }: { classes: IClassroom[] }) => {
           <TabsList className="md:hidden flex  mx-auto">
             <DropdownMenu >
             <DropdownMenuTrigger  className="border-none cursor-pointer  flex justify-center px-4 py-2 border border-gray-300 rounded-lg outline-none ">
-        <p className=" border  border-gray-300 px-3 py-1 rounded-md   flex items-center  gap-1">Open <MdArrowDropDown/></p>
+        <p className=" border  border-gray-300 px-3 py-1 rounded-md   flex items-center  gap-1">{today} <MdArrowDropDown/></p>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {
