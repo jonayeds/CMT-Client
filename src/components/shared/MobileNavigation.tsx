@@ -28,11 +28,13 @@ const MobileNavigation = ({path, user}: {path: string, user: IUser}) => {
         <div className="flex flex-col gap-6 sm:text-sm text-xs">
           <Link href={"/"} className={`${path === "/" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><Home className="h-6 w-6 " /> Home</Link>
           
-             <Link href={"/my-classes"} className={`${path === "/my-classes" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}>{user?  <BookOpen className="h-6 w-6 "/> : <Info className="h-6 w-6 "/>} {user ? "My Classes" : "About"}</Link> 
+             <Link href={ user ? "/my-classes" : "/about"} className={`${ 
+            path === "/about" || path === "/my-classes" ? activeNav : inactiveNav
+          }  flex items-center gap-2 py-2 px-4 rounded-lg `}>{user?  <BookOpen className="h-6 w-6 "/> : <Info className="h-6 w-6 "/>} {user ? "My Classes" : "About"}</Link> 
           
 
           {
-            user ? (user?.role === "student") ? <Link href={"/join-classroom"} className={`${path === "/join-classroom" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><Plus className="h-6 w-6 "/> Join Classroom</Link>: <Link href={"/create-classroom"} className={`${path === "/create-classroom" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><PlusCircle className="h-6 w-6 "/> Create Classroom</Link> : <Link href={"/contact"} className={`${path === "/contact" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><Mail className=" h-6 w-6 "/> Contact</Link>
+            user ? (user?.role === "student") ? <Link href={"/join-classroom"} className={`${path === "/join-classroom" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><Plus className="h-6 w-6 "/> Join Classroom</Link>: <Link href={"/create-classroom"} className={`${path === "/create-classroom" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><PlusCircle className="h-6 w-6 "/> Create Classroom</Link> : <Link href={"/how-to"} className={`${path === "/how-to" ? activeNav : inactiveNav} flex items-center gap-2 py-2 px-4 rounded-lg `}><Mail className=" h-6 w-6 "/> how-to</Link>
           }
           
           

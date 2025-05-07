@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import {
   BookOpen,
-  Contact,
   Home,
   Info,
   LayoutDashboard,
@@ -25,6 +24,7 @@ import { Skeleton } from "../ui/skeleton";
 import { logoutUser } from "@/services/AuthService";
 import MobileNavigation from "./MobileNavigation";
 import { IUser } from "@/types/user";
+import { HiDocument } from "react-icons/hi2";
 const Navbar = () => {
   const path = usePathname();
   const { user, isLoading, setUser } = useUser();
@@ -73,19 +73,19 @@ const Navbar = () => {
           user ? <Link
           href={user.role === "student" ? "/join-classroom" : "/create-classroom"}
           className={`${
-             ["/contact", "/create-classroom", "/join-classroom"].includes(path) ? activeNav : inactiveNav
+             ["/how-to", "/create-classroom", "/join-classroom"].includes(path) ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
           {user.role === "student" ? <Plus /> : <PlusCircle />}
           {user.role === "student" ? "Join Class" : "Create Class"}
         </Link> :  <Link
-          href={"/contact"}
+          href={"/how-to"}
           className={`${
-            path === "/contact" ? activeNav : inactiveNav
+            path === "/how-to" ? activeNav : inactiveNav
           } py-2 px-4 rounded-full flex items-center gap-1 `}
         >
-          <Contact />
-          Contact
+          <HiDocument/>
+          How to
         </Link>
         }
         
