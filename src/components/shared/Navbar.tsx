@@ -47,8 +47,8 @@ const Navbar = () => {
         <div className="lg:hidden">
         <MobileNavigation path={path} user={user as IUser} />
         </div>
-        <Link href={"/"} className="logo text-4xl ">
-          Classroom
+        <Link href={"/"} className="logo text-2xl md:text-4xl flex items-end gap-1">
+          Classync <div className="w-3 h-3 bg-[#63c377] rounded-full relative bottom-1"/>
         </Link>
       </div>
       <div className="lg:flex gap-12 text-black bg-[#f4f4f4] px-0 rounded-full py-0 hidden">

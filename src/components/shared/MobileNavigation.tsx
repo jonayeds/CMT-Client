@@ -20,7 +20,9 @@ const MobileNavigation = ({path, user}: {path: string, user: IUser}) => {
       </DrawerTrigger>
       <DrawerContent className="sm:w-[60vw] w-[70vw] sm:px-[10vw] px-[2vw] gap-4 bg-white border-gray-100">
         <DrawerHeader>
-          <DrawerTitle className="text-3xl logo text-center">Classroom</DrawerTitle>
+          <DrawerTitle className=" flex justify-center"><Link href={"/"} className="logo text-2xl md:text-4xl flex items-end gap-1">
+          Classync <div className="w-3 h-3 bg-[#63c377] rounded-full relative bottom-1"/>
+        </Link></DrawerTitle>
           <DrawerDescription className="text-center"></DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-6 sm:text-sm text-xs">
