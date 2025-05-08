@@ -10,7 +10,7 @@ const HeroSection = () => {
         <br /> Learning Materials <br />{" "}
         <span className="bg-heading relative">
           <Image
-            className=" -rotate-[10deg] w-auto h-auto absolute left-[5%] -top-[1.5vw] opacity-60 -z-10"
+            className=" -rotate-[10deg] w-auto h-auto absolute left-[5%] md:-top-[1.5vw] -top-[4vw] opacity-60 -z-10"
             alt="bg"
             src={headingBg}
             width={200}
