@@ -145,9 +145,9 @@ const howToGuide = {
 
 const HowToPage = () => {
   return (
-    <div className="md:py-10 px-4 py-6">
+    <div className="md:py-10 px-4 md:px-[6vw] py-6">
          <h1 className=" text-center md:text-4xl text-2xl  ">How to use <span className="logo md:text-5xl text-3xl">Classync</span></h1>
-         <div>
+         <div className="mt-20">
 
          <h4 className="text-3xl  mt-8">For Faculty</h4>
          {

@@ -40,7 +40,7 @@ const studentFeatures = [
 const AboutPage = () => {
     const featureClass = 'font-semibold text-[#63c377]'
   return (
-    <div className="md:py-10 px-4 py-6">
+    <div className="md:py-10 md:px-[6vw] px-4 py-6">
         <h1 className="md:text-5xl text-3xl text-center  logo">About</h1>
         <p className="text-sm mt-12">Welcome to <span className="logo text-lg">Classync</span>, a comprehensive and intuitive platform designed to revolutionize the way educators and students connect, collaborate, and succeed. Our mission is to streamline classroom management, enhance communication, and provide easy access to learning resources, fostering a more engaging and effective educational experience for everyone.</p>
         <p className="text-sm mt-4">In today&apos;s dynamic educational landscape, we understand the challenges faced by both faculty and students in managing coursework, communication, and participation. [Your Classroom Management Tool Name] was built to address these needs by providing a centralized hub for all classroom activities.</p>
