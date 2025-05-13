@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserFromCookies } from "@/services/AuthService";
 import { getASingleClassroom, getClassStudents } from "@/services/Classroom";
 import { IJwtDecodedUser } from "@/types/user";
+import CreateAssignment from "@/components/classroom/classroomDetails/create-assignment/CreateAssignment";
+import SubmitAssignment from "@/components/classroom/classroomDetails/SubmitAssignment";
 
 const ClassroomDetailPage = async ({params}:{params:Promise<{classroomId:string}>}) => {
   const { classroomId } = await params;
@@ -48,6 +50,9 @@ const ClassroomDetailPage = async ({params}:{params:Promise<{classroomId:string}
 
         <TabsContent value="class-content">
           <ClassroomBanner role={role as string} classroom={await classroom} />
+          {
+            user?.role === "faculty" ? <CreateAssignment classroomId={classroomId} /> : <SubmitAssignment/>
+          }
           <ContentContainer
             currentUser={user as IJwtDecodedUser}
             classroom={classroom}

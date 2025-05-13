@@ -12,7 +12,6 @@ const QRGenaretor = async ({ classroomId }: { classroomId: string }) => {
   );
   const localTime = moment().tz('Asia/Dhaka');
   const today = localTime.format('dddd');
-  const now = localTime.format("HH:mm");
   let qrCode;
   const isBetweenClassTime = isTimeBeetween(
     classroom.startTime,
@@ -32,15 +31,13 @@ const QRGenaretor = async ({ classroomId }: { classroomId: string }) => {
           height={200}
           className="md:w-[20vw] w-[70vw]"
         />
-      ) : (<>
+      ) : (
         <p className="text-gray-500 font-light text-lg md:text-2xl flex items-end gap-0">
           Class not started yet
           <Dot className="animate-bounce relative top-2 duration-100" />{" "}
           <Dot className="animate-bounce relative top-2 right-3 duration-100 delay-150" />
           <Dot className="animate-bounce relative top-2 right-6 duration-100 delay-300" />
         </p>
-        <p> time is:{today} at {now} but class at {classroom.startTime}-{classroom.endTime}</p>
-      </>
       )}
     </div>
   );
