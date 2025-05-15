@@ -1,8 +1,9 @@
 import { IAssignment } from "./assignment";
+import { IUser } from "./user";
 
 export interface ISubmission{
     assignment:IAssignment;
-    student:string;
+    student: IUser;
     _id:string;
     isLate:boolean;
     submissionFile:string;

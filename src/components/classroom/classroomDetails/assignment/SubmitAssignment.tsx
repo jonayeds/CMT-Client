@@ -38,7 +38,7 @@ const SubmitAssignment = ({mySubmission, assignmentId}:{mySubmission:ISubmission
     <div className="border border-gray-200 w-max p-4 rounded-lg mx-auto">
       <div className="flex gap-4 justify-between min-w-[30vw] md:items-end items-center"> 
       <p className="md:text-2xl text-lg text-gray-500">Your Submission</p>
-      <div className="md:text-sm text-xs text-gray-500">{mySubmission === null ? 'Not Submitted':<div>{mySubmission === undefined ? <LoadingSpinner className="min-h-max " loaderClassName="h-4 w-4"/> : 'Turned In'}</div> }</div>
+      <div className="md:text-sm text-xs text-gray-500">{mySubmission === null ? 'Not Submitted':<div>{mySubmission === undefined ? <LoadingSpinner className="min-h-max " loaderClassName="h-4 w-4"/> : <span>Turned In {mySubmission.isLate ? <span className="text-red-500">Late</span>: <span className="text-green-500">Ontime</span>}</span>}</div> }</div>
       </div>
       
 

@@ -6,21 +6,27 @@ import moment from "moment"
 import { MdAssignment } from "react-icons/md"
 import SubmitAssignment from "./SubmitAssignment"
 import { useEffect, useState } from "react"
-import { getMyAssignmentSubmission } from "@/services/assignment"
+import { getAllAssignmentSubmissions, getMyAssignmentSubmission } from "@/services/assignment"
 import { ISubmission } from "@/types/submission"
+import SubmissionContainer from "./SubmissionContainer"
 
 
 const AssignmentDetails = ({assignment}:{assignment:IAssignment}) => {
     const {user} = useUser()
     const createdAt = moment(assignment.createdAt).format('MMM Do YY')    
     const dueDate = moment(assignment.deadline).format('MMM Do YY')  
-    const daysLeft = moment(assignment.deadline).diff(moment(), 'days') 
+    const daysLeft = moment(assignment.deadline).fromNow() 
     const [mySubmission, setMySubmission] = useState<ISubmission | undefined | null>(undefined)
+    const [assignmentSubmissions, setAssignmentSubmissions] = useState<ISubmission []>([])
     useEffect(()=>{
         const getSubmission = async () => {
             if(user?.role === "student"){
                 const data = await getMyAssignmentSubmission(assignment._id)
                 setMySubmission(data?.data) 
+            }
+            else if(user?.role === "faculty"){
+                const {data:submission} = await getAllAssignmentSubmissions(assignment._id)
+                setAssignmentSubmissions(submission)
             }
         }
         getSubmission()
@@ -37,7 +43,7 @@ const AssignmentDetails = ({assignment}:{assignment:IAssignment}) => {
                 <p>{assignment.totalMarks} Marks</p>
                 <div className="flex flex-col items-end gap-2">
                 <p >Due at,<span className="text-green-600"> {dueDate}</span></p>
-                <p className="text-sm text-gray-600">{daysLeft} days Left</p>  
+                <p className="text-sm text-gray-600">{daysLeft}</p>  
                 </div>
             </div>
         </div>
@@ -45,6 +51,9 @@ const AssignmentDetails = ({assignment}:{assignment:IAssignment}) => {
         <div>
             {
                 user?.role === "student" && <SubmitAssignment assignmentId={assignment._id} mySubmission={mySubmission}/>
+            }
+            {
+                user?.role === "faculty" && <SubmissionContainer submissions={assignmentSubmissions} assignment={assignment} />
             }
         </div>
     </div>
