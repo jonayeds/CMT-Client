@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -96,9 +95,6 @@ export const getAllAssignmentSubmissions = async (assignmentId: string) => {
             "Content-Type": "application/json",
             Authorization: `${token}`,
         },
-        next:{
-            tags:["evaluate"]
-        }
         }
     );
     const res = await result.json();
@@ -116,7 +112,6 @@ export const evaluateAssignment = async (data: FieldValues, submissionId:string)
         }, 
         body: JSON.stringify(data), 
         })
-        revalidateTag("evaluate")
     const res = await result.json();
     return res;
 }

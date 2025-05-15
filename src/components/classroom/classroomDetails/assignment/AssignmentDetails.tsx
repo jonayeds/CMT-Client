@@ -17,7 +17,7 @@ const AssignmentDetails = ({assignment}:{assignment:IAssignment}) => {
     const dueDate = moment(assignment.deadline).format('MMM Do YY')  
     const daysLeft = moment(assignment.deadline).fromNow() 
     const [mySubmission, setMySubmission] = useState<ISubmission | undefined | null>(undefined)
-    const [assignmentSubmissions, setAssignmentSubmissions] = useState<ISubmission []>([])
+    const [assignmentSubmissions, setAssignmentSubmissions] = useState<ISubmission [] | null>(null)
     useEffect(()=>{
         const getSubmission = async () => {
             if(user?.role === "student"){
