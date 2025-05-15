@@ -8,22 +8,31 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { ClassHours, ClassMinutes } from "@/constants/classroom"
+import { createAssignment } from "@/services/assignment"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { format } from "date-fns"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { FaCalendarDays } from "react-icons/fa6"
+import { toast } from "sonner"
 
 const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
     const form = useForm()
-    const onSubmit:SubmitHandler<FieldValues> = (data)=>{
+    const onSubmit:SubmitHandler<FieldValues> =async (data)=>{
         const assignment = {
             title:data.title,
             description:data.description,
             deadline:new Date(data.date.setHours(Number(data.hour), Number(data.minute),0,0)),
-            totalMarks:data.totalMarks,
+            totalMarks:Number(data.totalMarks),
             classroom:classroomId
         }
-        console.log(assignment)
+        const result = await createAssignment(assignment)
+        console.log(result)
+        if(result.success){
+          toast.success(result.message)
+        }else{
+          toast.error(result.message)
+        }
+
     }
   return (
     <div className="bg-white mt-8 shadow-none border mx-[5vw] border-gray-100  py-4  px-8 rounded-2xl  duration-500">
