@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"    
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -11,13 +12,17 @@ import { ClassHours, ClassMinutes } from "@/constants/classroom"
 import { createAssignment } from "@/services/assignment"
 import { PopoverClose } from "@radix-ui/react-popover"
 import { format } from "date-fns"
+import { useRouter } from "next/navigation"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { FaCalendarDays } from "react-icons/fa6"
 import { toast } from "sonner"
 
 const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
     const form = useForm()
+    const router = useRouter()
     const onSubmit:SubmitHandler<FieldValues> =async (data)=>{
+      const id = toast.loading("Creating assignment...")  
+      try {
         const assignment = {
             title:data.title,
             description:data.description,
@@ -28,10 +33,15 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
         const result = await createAssignment(assignment)
         console.log(result)
         if(result.success){
-          toast.success(result.message)
+          toast.success(result.message, {id})
+          router.push(`/my-classes/${classroomId}`)
         }else{
-          toast.error(result.message)
+          toast.error(result.message, {id, description: "Please try again"})  
         }
+      } catch (error) {
+        toast.error( "Something went wrong", {id, description: "Please try again"}) 
+      }
+        
 
     }
   return (
@@ -52,6 +62,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Textarea
+                  required
                     placeholder="type here..."
                     {...field}
                     value={field.value || ""}
@@ -94,7 +105,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
                                   <Popover>
                                       <PopoverTrigger asChild>
                                           <FormControl>
-                                              <Button className="rounded-lg border-gray-400  w-full">
+                                              <Button  className="rounded-lg border-gray-400  w-full">
                                                   {
                                                       field.value? (
                                                           format(field.value, "PPP")
@@ -104,7 +115,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
                                               </Button>
                                           </FormControl>
                                       </PopoverTrigger>
-                                      <PopoverContent className="bg-white border-none">
+                                      <PopoverContent  className="bg-white border-none">
                                           <PopoverClose asChild>
           
                                           <Calendar
@@ -112,6 +123,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
                                           selected={field.value}
                                           onSelect={field.onChange}
                                           initialFocus
+                                          required
                                           disabled={(date)=> {
                                               const today = new Date()
                                               today.setHours(0,0,0,0)
@@ -135,6 +147,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
           
                           <FormControl>
                             <Select
+                            required
                               {...field}
                               value={field.value}
                               onValueChange={field.onChange}
@@ -167,6 +180,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
           
                           <FormControl>
                             <Select
+                            required
                               {...field}
                               value={field.value}
                               onValueChange={field.onChange}
@@ -202,7 +216,7 @@ const CreateAssignmentForm = ({classroomId}:{classroomId:string}) => {
               <FormItem className="md:w-[20vw] w-full">   
                 <FormLabel>Total Marks</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} value={field.value || ""} />
+                  <Input required type="number" {...field} value={field.value || ""} />
                 </FormControl>
               </FormItem>
             )}
