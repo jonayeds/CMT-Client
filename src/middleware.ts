@@ -36,6 +36,14 @@ export const middleware = async (request: NextRequest) => {
   if (isQRCodeGenerator && user?.role === "faculty") {
     return NextResponse.next();
   }
+  const isAssignment = pathname.match(/^\/my-classes\/([a-fA-F0-9]+)\/assignment\/([a-fA-F0-9]+)$/)
+  const isCreateAssignment = pathname.match(/^\/my-classes\/([a-fA-F0-9]+)\/create-assignment$/)
+  if(isCreateAssignment && user?.role === "faculty"){
+    return NextResponse.next(); 
+  }
+  if(isAssignment && user){
+    return NextResponse.next();
+  }
   if (match && user) {
     return NextResponse.next();
   }
@@ -65,7 +73,9 @@ export const config = {
     "/login",
     "/register",
     "/my-classes/:classroomId",
+    "/my-classes/:classroomId/assignment/:assignmentId",
     "/my-classes/:classroomId/attendance-qr-code",
+    "/my-classes/:classroomId/create-assignment", 
     "/student/dashboard/my-routine",
     "/student/dashboard/attendance",
     "/student/dashboard/manage-classes",

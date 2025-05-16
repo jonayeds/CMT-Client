@@ -64,8 +64,9 @@ const SubmitAssignment = ({mySubmission, assignmentId}:{mySubmission:ISubmission
           </div>
         }
           
-      </div>:<div>{mySubmission === undefined ? <LoadingSpinner className="min-h-max " loaderClassName="h-4 w-4"/> : <div className=" border-gray-200 border mt-4  px-8 py-4 rounded-xl">
+      </div>:<div>{mySubmission === undefined ? <LoadingSpinner className="min-h-max " loaderClassName="h-4 w-4"/> : <div className=" flex justify-between border-gray-200 border mt-4  px-8 py-4 rounded-xl">
         <a href={mySubmission?.submissionFile} target="#" className="hover:underline">My Submission</a>
+        <span className="text-gray-500">{mySubmission?.marks ? `${mySubmission.marks} Marks` : 'Not evaluated'}</span>
       </div> }</div> }</div>
 
 

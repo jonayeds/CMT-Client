@@ -24,10 +24,11 @@ const LoginForm = () => {
             toast.success(result?.message)
             setUser(result?.data?.data)
             router.push("/")
+            setLoading(false);
           }else{
             toast.error(result?.message)
+            setLoading(false);
           }
-      setLoading(false);
     };
     const form = useForm();
   
