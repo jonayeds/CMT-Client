@@ -35,7 +35,7 @@ const ImageInput = ({image, setImage}: {image: string, setImage: (image: string)
             )}
 
         <label htmlFor="image" className="absolute w-full h-full cursor-pointer"></label>
-        <Input onChange={handleChange}  id="image" className="hidden" type="file" accept=".png .jpg .jpeg .webp" />
+        <Input onChange={handleChange}  id="image" className="hidden" type="file" accept=".jpg,.jpeg" />
         </div>
     </div>
   )

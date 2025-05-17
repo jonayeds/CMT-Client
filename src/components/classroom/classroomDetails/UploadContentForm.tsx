@@ -24,7 +24,6 @@ const UploadContentForm = ({ classroomId }: { classroomId: string }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [links, setLinks] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  // const router = useRouter()
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     data.contentLinks = links;
     setLoading(true);
@@ -38,6 +37,9 @@ const UploadContentForm = ({ classroomId }: { classroomId: string }) => {
     const result = await uploadClassroomContent(data);
     if (result?.success) {
       toast.success(result?.message);
+      setFiles([]);
+      setLinks([]); 
+      form.reset();
     } else {
       toast.error(result?.message);
     }
