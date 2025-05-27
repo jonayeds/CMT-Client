@@ -33,7 +33,11 @@
 
 - Clear Routine Overview: Stay informed about your class schedules and routines directly within the application.
 
-
+### Technologies
+- Next js
+- Shad cn
+- React hook form
+- Socket.io
 
 
 
