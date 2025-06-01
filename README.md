@@ -1,5 +1,7 @@
 ## Classync. - Classroom Management Tool 
 
+### Server is currently off ( shifting to a new deployment platform )
+
 ### Key Features
 #### Faculty
 
