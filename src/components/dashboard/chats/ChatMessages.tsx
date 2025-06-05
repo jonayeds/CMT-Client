@@ -16,7 +16,7 @@ import MessagesViewer from "./MessagesViewer";
 
 
 const ChatMessages = ({messages,chatId}:{messages:IMessage[], chatId:string}) => {
-  const socket = io('https://cmt-server-production.up.railway.app')
+  const socket = io('https://classync-ebhkbgd8beb7btg3.southeastasia-01.azurewebsites.net')
   const {user,isLoading} = useUser()
   const form = useForm()
   const [msgs, setMsgs] = useState(messages)

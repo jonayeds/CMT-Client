@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic"
 
 const ChatRequestsPage = async() => {
     const {data:requests} = await getMyChatRequests()
+    console.log(requests)
   return (
      <div className="px-4 py-12">
             <h1 className="md:text-[4vw] font-extralight text-[7vw] text-center">
